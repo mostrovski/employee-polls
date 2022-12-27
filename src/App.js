@@ -1,11 +1,18 @@
-import React from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Navbar from './components/Navbar';
+import Leaderboard from './features/employees/Leaderboard';
+import AddPollForm from './features/polls/AddPollForm';
+import PollsList from './features/polls/PollsList';
 
-function App() {
+export default function App() {
     return (
-        <div>
-            <h1 className="text-3xl font-bold">Hello Polls!</h1>
-        </div>
+        <BrowserRouter>
+            <Navbar />
+            <Routes>
+                <Route path="/" element={<PollsList />} />
+                <Route path="add" element={<AddPollForm />} />
+                <Route path="leaderboard" element={<Leaderboard />} />
+            </Routes>
+        </BrowserRouter>
     );
 }
-
-export default App;
