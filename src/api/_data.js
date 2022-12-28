@@ -220,3 +220,21 @@ export function _saveQuestionAnswer({ authedUser, qid, answer }) {
         }, 500);
     });
 }
+
+export function _authenticate(credentials) {
+    const { username, password } = credentials;
+
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            if (
+                !username ||
+                !password ||
+                users[username]?.password !== password
+            ) {
+                reject('Username or password is not valid');
+            }
+
+            resolve({ user: username });
+        }, 1000);
+    });
+}
