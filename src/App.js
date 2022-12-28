@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import Shell from './components/Shell';
 import Navbar from './components/Navbar';
 import LoginForm from './features/auth/LoginForm';
 import Leaderboard from './features/employees/Leaderboard';
@@ -14,14 +15,14 @@ export default function App() {
     return (
         <BrowserRouter>
             {authenticated ? (
-                <>
+                <Shell>
                     <Navbar />
                     <Routes>
                         <Route path="/" element={<PollsList />} />
                         <Route path="add" element={<AddPollForm />} />
                         <Route path="leaderboard" element={<Leaderboard />} />
                     </Routes>
-                </>
+                </Shell>
             ) : (
                 <Routes>
                     <Route path="/" element={<LoginForm />} />

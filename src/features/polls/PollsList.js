@@ -1,5 +1,5 @@
-import Shell from '../../components/Shell';
+import Content from '../../components/Content';
 
 export default function PollsList() {
-    return <Shell heading="Employee Polls">Polls List Content</Shell>;
+    return <Content heading="Employee Polls">Polls List Content</Content>;
 }

@@ -1,5 +1,5 @@
-import Shell from '../../components/Shell';
+import Content from '../../components/Content';
 
 export default function AddPollForm() {
-    return <Shell heading="Add New Poll">Add New Poll Content</Shell>;
+    return <Content heading="Add New Poll">Add New Poll Content</Content>;
 }

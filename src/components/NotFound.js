@@ -8,7 +8,7 @@ export default function NotFound() {
                     <img
                         className="mx-auto h-12 w-auto rounded"
                         src="/logo512.png"
-                        alt="Your Company"
+                        alt="Employee Polls"
                     />
                     <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
                         Failed to find anything...

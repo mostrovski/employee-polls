@@ -1,5 +1,5 @@
-import Shell from '../../components/Shell';
+import Content from '../../components/Content';
 
 export default function Leaderboard() {
-    return <Shell heading="Polling Leaders">Leaderboard Content</Shell>;
+    return <Content heading="Polling Leaders">Leaderboard Content</Content>;
 }

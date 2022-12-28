@@ -38,9 +38,14 @@ export default function LoginForm() {
             <div className="w-full max-w-md space-y-8">
                 <div>
                     <img
-                        className="mx-auto h-12 w-auto rounded"
+                        className={
+                            'mx-auto h-12 w-auto rounded' +
+                            (attemptStatus === 'pending'
+                                ? ' animate-bounce'
+                                : '')
+                        }
                         src="/logo512.png"
-                        alt="Your Company"
+                        alt="Employee Polls"
                     />
                     <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
                         Sign in to your account
