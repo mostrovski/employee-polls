@@ -3,8 +3,7 @@ import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { Disclosure, Menu, Transition } from '@headlessui/react';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
-import { authenticatedUser } from '../features/auth/authSlice';
-import { selectEmployeeById } from '../features/employees/employeesSlice';
+import { selectAuthenticatedEmployee } from '../features/employees/employeesSlice';
 import LogoutButton from '../features/auth/LogoutButton';
 
 function classNames(...classes) {
@@ -22,9 +21,7 @@ export default function Navbar() {
 
     const [user, setUser] = useState({});
 
-    const authenticated = useSelector(authenticatedUser);
-    const { name, avatarURL } =
-        useSelector(state => selectEmployeeById(state, authenticated)) ?? {};
+    const { name, avatarURL } = useSelector(selectAuthenticatedEmployee) ?? {};
 
     useEffect(() => {
         setUser({

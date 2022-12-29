@@ -2,23 +2,20 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { _getQuestions } from '../../api/_data';
 
 const initialState = {
+    ids: [],
     entities: {},
     status: 'idle',
     error: null,
 };
 
+const sortIds = polls =>
+    Object.values(polls)
+        .sort((a, b) => b.timestamp - a.timestamp)
+        .map(poll => poll.id);
+
 export const fetchPolls = createAsyncThunk('polls/fetchPolls', async () => {
     const response = await _getQuestions();
-
-    const sorted = {};
-
-    Object.values(response)
-        .sort((a, b) => b.timestamp - a.timestamp)
-        .forEach(poll => {
-            sorted[poll.id] = poll;
-        });
-
-    return sorted;
+    return response;
 });
 
 const pollsSlice = createSlice({
@@ -32,6 +29,7 @@ const pollsSlice = createSlice({
             })
             .addCase(fetchPolls.fulfilled, (state, action) => {
                 state.status = 'succeeded';
+                state.ids = sortIds(action.payload);
                 state.entities = action.payload;
             })
             .addCase(fetchPolls.rejected, (state, action) => {
@@ -45,6 +43,8 @@ export default pollsSlice.reducer;
 
 export const fetchPollsStatus = state => state.polls.status;
 
-export const selectAllPolls = state => state.polls.entities;
+export const selectAllPolls = state => Object.values(state.polls.entities);
+
+export const selectPollIds = state => state.polls.ids;
 
 export const selectPollById = (state, id) => state.polls.entities[id];

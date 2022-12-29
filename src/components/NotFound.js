@@ -1,4 +1,4 @@
-import { NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 export default function NotFound() {
     return (
@@ -16,12 +16,9 @@ export default function NotFound() {
                 </div>
 
                 <div className="text-center">
-                    <NavLink
-                        to="/"
-                        className="font-medium text-violet-600 hover:text-violet-500"
-                    >
+                    <Link to="/" className="link-primary">
                         Sign in to your account
-                    </NavLink>
+                    </Link>
                 </div>
             </div>
         </div>

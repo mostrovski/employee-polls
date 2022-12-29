@@ -40,3 +40,6 @@ export default employeesSlice.reducer;
 export const fetchEmployeesStatus = state => state.employees.status;
 
 export const selectEmployeeById = (state, id) => state.employees.entities[id];
+
+export const selectAuthenticatedEmployee = state =>
+    selectEmployeeById(state, state.auth.user);

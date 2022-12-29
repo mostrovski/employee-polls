@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+  .link-primary {
+    @apply font-medium text-violet-600 hover:text-violet-500;
+  }
+}

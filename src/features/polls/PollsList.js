@@ -1,31 +1,58 @@
-import { useEffect } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import format from 'date-fns/format';
 import {
     fetchPolls,
     fetchPollsStatus,
-    selectAllPolls,
+    selectPollIds,
     selectPollById,
 } from './pollsSlice';
 import Content from '../../components/Content';
+import { selectAuthenticatedEmployee } from '../employees/employeesSlice';
+import { Link } from 'react-router-dom';
 
-const PollsListItem = ({ pollId }) => {
+const PollCard = ({ pollId }) => {
     const poll = useSelector(state => selectPollById(state, pollId));
 
     return (
-        <div>
-            <h1>{poll.author}</h1>
-            <p>
-                {format(new Date(poll.timestamp), "dd/MM/yyyy 'at' HH:mm:ss")}
-            </p>
+        <div className="bg-white p-5 rounded drop-shadow-md text-center">
+            <div>
+                by{' '}
+                <span className="font-semibold tracking-wide">
+                    {poll.author}
+                </span>
+            </div>
+            <div>
+                {format(
+                    new Date(poll.timestamp),
+                    "MMMM d, yyyy, 'at' HH:mm:ss"
+                )}
+            </div>
+            <Link to={`/polls/${poll.id}`} className="link-primary block mt-3">
+                Show
+            </Link>
+        </div>
+    );
+};
+
+const PollsGrid = ({ pollIds }) => {
+    return (
+        <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-3 my-6">
+            {pollIds.map(id => (
+                <PollCard key={id} pollId={id} />
+            ))}
         </div>
     );
 };
 
 export default function PollsList() {
+    const [showResponded, setShowResponded] = useState(false);
+
     const dispatch = useDispatch();
-    const polls = useSelector(selectAllPolls);
+
+    const pollIds = useSelector(selectPollIds);
     const pollsStatus = useSelector(fetchPollsStatus);
+    const authenticatedEmployee = useSelector(selectAuthenticatedEmployee);
 
     useEffect(() => {
         if (pollsStatus === 'idle') {
@@ -33,12 +60,57 @@ export default function PollsList() {
         }
     }, [pollsStatus, dispatch]);
 
-    let content = 'Polls are loading...';
+    const employeeAnswers = Object.keys(authenticatedEmployee?.answers ?? {});
 
-    if (pollsStatus === 'succeeded') {
-        content = Object.keys(polls).map(id => (
-            <PollsListItem key={id} pollId={id} />
-        ));
+    const responded = useMemo(
+        () => pollIds.filter(id => employeeAnswers.includes(id)),
+        [pollIds, employeeAnswers]
+    );
+
+    const notResponded = useMemo(
+        () => pollIds.filter(id => !employeeAnswers.includes(id)),
+        [pollIds, employeeAnswers]
+    );
+
+    let content = (
+        <div className="h-96 rounded-lg bg-white flex justify-center items-center animate-pulse">
+            <div className="text-7xl">...</div>
+        </div>
+    );
+
+    if (pollsStatus === 'succeeded' && authenticatedEmployee) {
+        content = (
+            <>
+                <div className="flex space-x-3">
+                    <span
+                        className={
+                            showResponded
+                                ? 'cursor-pointer'
+                                : 'underline underline-offset-8 decoration-violet-600 font-semibold'
+                        }
+                        onClick={() => setShowResponded(false)}
+                    >
+                        Not responded
+                    </span>
+                    <span
+                        className={
+                            showResponded
+                                ? 'underline underline-offset-8 decoration-violet-600 font-semibold'
+                                : 'cursor-pointer'
+                        }
+                        onClick={() => setShowResponded(true)}
+                    >
+                        Responded
+                    </span>
+                </div>
+
+                {showResponded ? (
+                    <PollsGrid pollIds={responded} />
+                ) : (
+                    <PollsGrid pollIds={notResponded} />
+                )}
+            </>
+        );
     }
 
     return <Content heading="Employee Polls">{content}</Content>;
