@@ -20,16 +20,9 @@ export default function Leaderboard() {
                         polls: employee.questions.length,
                     };
                 })
-                .sort((first, second) => {
-                    const totalActionsFirst = first.responses + first.polls;
-                    const totalActionsSecond = second.responses + second.polls;
-
-                    if (totalActionsFirst === totalActionsSecond) {
-                        return second.answers - first.answers;
-                    }
-
-                    return totalActionsSecond - totalActionsFirst;
-                }),
+                .sort(
+                    (a, b) => b.responses + b.polls - (a.responses + a.polls)
+                ),
         [employees]
     );
 
