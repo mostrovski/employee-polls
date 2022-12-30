@@ -8,19 +8,20 @@ import {
     selectPollById,
 } from './pollsSlice';
 import Content from '../../components/Content';
-import { selectAuthenticatedEmployee } from '../employees/employeesSlice';
+import {
+    selectAuthenticatedEmployee,
+    selectEmployeeById,
+} from '../employees/employeesSlice';
 import { Link } from 'react-router-dom';
 
 const PollCard = ({ pollId }) => {
     const poll = useSelector(state => selectPollById(state, pollId));
+    const author = useSelector(state => selectEmployeeById(state, poll.author));
 
     return (
         <div className="bg-white p-5 rounded drop-shadow-md text-center">
             <div>
-                by{' '}
-                <span className="font-semibold tracking-wide">
-                    {poll.author}
-                </span>
+                by <span className="font-semibold">{author.name}</span>
             </div>
             <div>
                 {format(
@@ -86,7 +87,7 @@ export default function PollsList() {
                         className={
                             showResponded
                                 ? 'cursor-pointer'
-                                : 'underline underline-offset-8 decoration-violet-600 font-semibold'
+                                : 'underline underline-offset-2 decoration-violet-600 font-semibold'
                         }
                         onClick={() => setShowResponded(false)}
                     >
@@ -95,7 +96,7 @@ export default function PollsList() {
                     <span
                         className={
                             showResponded
-                                ? 'underline underline-offset-8 decoration-violet-600 font-semibold'
+                                ? 'underline underline-offset-2 decoration-violet-600 font-semibold'
                                 : 'cursor-pointer'
                         }
                         onClick={() => setShowResponded(true)}
