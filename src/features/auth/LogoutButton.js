@@ -23,7 +23,7 @@ export default function LogoutButton() {
                     aria-hidden="true"
                 />
             </span>
-            Sign out
+            <span>Sign out</span>
         </button>
     );
 }

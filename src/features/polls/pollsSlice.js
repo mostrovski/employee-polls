@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { _getQuestions } from '../../api/_data';
+import { _getQuestions, _saveQuestion } from '../../api/_data';
 
 const initialState = {
     ids: [],
@@ -17,6 +17,14 @@ export const fetchPolls = createAsyncThunk('polls/fetchPolls', async () => {
     const response = await _getQuestions();
     return response;
 });
+
+export const addNewPoll = createAsyncThunk(
+    'polls/addNewPoll',
+    async question => {
+        const response = await _saveQuestion(question);
+        return response;
+    }
+);
 
 const pollsSlice = createSlice({
     name: 'polls',
@@ -36,6 +44,12 @@ const pollsSlice = createSlice({
                 state.status = 'failed';
                 state.error = action.error.message;
             });
+
+        builder.addCase(addNewPoll.fulfilled, (state, action) => {
+            const savedQuestion = action.payload;
+            state.entities[savedQuestion.id] = savedQuestion;
+            state.ids = sortIds(state.entities);
+        });
     },
 });
 

@@ -39,7 +39,14 @@ export default function Leaderboard() {
                     </thead>
                     <tbody>
                         {leaders.map(leader => (
-                            <tr className="border-b" key={leader.name}>
+                            <tr
+                                className={
+                                    authenticatedEmployee === leader.id
+                                        ? 'animate-pulse border-b'
+                                        : 'border-b'
+                                }
+                                key={leader.name}
+                            >
                                 <td className="px-2 lg:px-8 py-4">
                                     <div className="flex items-center space-x-2">
                                         <img
@@ -47,16 +54,7 @@ export default function Leaderboard() {
                                             src={leader.avatar}
                                             alt={leader.name}
                                         />
-                                        <div
-                                            className={
-                                                authenticatedEmployee ===
-                                                leader.id
-                                                    ? 'animate-pulse'
-                                                    : ''
-                                            }
-                                        >
-                                            {leader.name}
-                                        </div>
+                                        <div>{leader.name}</div>
                                     </div>
                                 </td>
                                 <td className="px-2 lg:px-8 py-4">

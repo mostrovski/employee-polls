@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { LockClosedIcon } from '@heroicons/react/20/solid';
 import { login } from './authSlice';
+import FlashError from '../../components/FlashError';
 
 export default function LoginForm() {
     const [username, setUsername] = useState('');
@@ -9,10 +10,15 @@ export default function LoginForm() {
     const [attemptStatus, setAttemptStatus] = useState('idle');
     const [error, setError] = useState(null);
 
+    const usernameInputEl = useRef(null);
+    useEffect(() => usernameInputEl.current.focus(), []);
+
     const dispatch = useDispatch();
 
-    const handleUsernameChange = event => setUsername(event.target.value);
-    const handlePasswordChange = event => setPassword(event.target.value);
+    const handleUsernameChange = event =>
+        setUsername(event.target.value.trim());
+    const handlePasswordChange = event =>
+        setPassword(event.target.value.trim());
 
     const canAttemptLogin =
         [username, password].every(Boolean) && attemptStatus === 'idle';
@@ -50,11 +56,7 @@ export default function LoginForm() {
                     <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
                         Sign in to your account
                     </h2>
-                    {error && (
-                        <div className="text-red-500 text-center mt-6">
-                            {error}
-                        </div>
-                    )}
+                    <FlashError message={error} />
                 </div>
                 <form
                     className="mt-8 space-y-6"
@@ -71,9 +73,10 @@ export default function LoginForm() {
                                 name="username"
                                 type="text"
                                 required
-                                className="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                                className="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-violet-500 focus:outline-none focus:ring-violet-500 sm:text-sm"
                                 placeholder="Username"
                                 onChange={event => handleUsernameChange(event)}
+                                ref={usernameInputEl}
                             />
                         </div>
                         <div>
@@ -86,7 +89,7 @@ export default function LoginForm() {
                                 type="password"
                                 autoComplete="current-password"
                                 required
-                                className="relative block w-full appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                                className="relative block w-full appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-violet-500 focus:outline-none focus:ring-violet-500 sm:text-sm"
                                 placeholder="Password"
                                 onChange={event => handlePasswordChange(event)}
                             />
@@ -104,7 +107,7 @@ export default function LoginForm() {
                                     aria-hidden="true"
                                 />
                             </span>
-                            Sign in
+                            <span>Sign in</span>
                         </button>
                     </div>
                 </form>

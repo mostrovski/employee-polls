@@ -18,7 +18,12 @@ export const fetchEmployees = createAsyncThunk(
 const employeesSlice = createSlice({
     name: 'employees',
     initialState,
-    reducers: {},
+    reducers: {
+        pollAdded(state, action) {
+            const { id, author } = action.payload;
+            state.entities[author].questions.push(id);
+        },
+    },
     extraReducers(builder) {
         builder
             .addCase(fetchEmployees.pending, (state, action) => {
@@ -36,6 +41,8 @@ const employeesSlice = createSlice({
 });
 
 export default employeesSlice.reducer;
+
+export const { pollAdded } = employeesSlice.actions;
 
 export const fetchEmployeesStatus = state => state.employees.status;
 
