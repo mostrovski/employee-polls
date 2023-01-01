@@ -1,5 +1,4 @@
 import Content from '../../components/Content';
-import { QueueListIcon } from '@heroicons/react/20/solid';
 import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addNewPoll } from './pollsSlice';
@@ -7,6 +6,7 @@ import { authenticatedUser } from '../auth/authSlice';
 import { useNavigate } from 'react-router-dom';
 import { pollAdded } from '../employees/employeesSlice';
 import FlashError from '../../components/FlashError';
+import Button from '../../components/Button';
 
 export default function AddPollForm() {
     const [firstOption, setFirstOption] = useState('');
@@ -82,7 +82,7 @@ export default function AddPollForm() {
                 <FlashError message={error} />
                 <form method="POST" onSubmit={event => handleSubmit(event)}>
                     <div className="overflow-hidden max-w-md mx-auto">
-                        <div className="bg-white px-4 py-5 sm:p-6 space-y-5">
+                        <div className="px-4 py-5 sm:px-6 space-y-5">
                             <div className="">
                                 <label
                                     htmlFor="first-option"
@@ -122,19 +122,12 @@ export default function AddPollForm() {
                                 />
                             </div>
                         </div>
-                        <div className="px-4 py-3 sm:px-6 w-full">
-                            <button
+                        <div className="px-4 py-3 sm:px-6">
+                            <Button
+                                text="Submit"
                                 type="submit"
-                                className="group relative flex w-full justify-center rounded-md border border-transparent bg-violet-600 py-2 px-4 text-sm font-medium text-white hover:bg-violet-700 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:ring-offset-2"
-                            >
-                                <span className="absolute inset-y-0 left-0 flex items-center pl-3">
-                                    <QueueListIcon
-                                        className="h-5 w-5 text-violet-500 group-hover:text-violet-400"
-                                        aria-hidden="true"
-                                    />
-                                </span>
-                                <span>Submit</span>
-                            </button>
+                                icon="addPoll"
+                            />
                         </div>
                     </div>
                 </form>
