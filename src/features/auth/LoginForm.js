@@ -45,7 +45,7 @@ export default function LoginForm() {
                 <div>
                     <img
                         className={
-                            'mx-auto h-12 w-auto rounded' +
+                            'mx-auto h-14 w-auto rounded' +
                             (attemptStatus === 'pending'
                                 ? ' animate-bounce'
                                 : '')

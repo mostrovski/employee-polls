@@ -4,7 +4,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addNewPoll } from './pollsSlice';
 import { authenticatedUser } from '../auth/authSlice';
 import { useNavigate } from 'react-router-dom';
-import { pollAdded } from '../employees/employeesSlice';
+import {
+    pollAdded,
+    selectAuthenticatedEmployee,
+} from '../employees/employeesSlice';
 import FlashError from '../../components/FlashError';
 import Button from '../../components/Button';
 
@@ -20,7 +23,7 @@ export default function AddPollForm() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const author = useSelector(authenticatedUser);
+    const author = useSelector(selectAuthenticatedEmployee);
 
     const handleFirstOptionChange = event =>
         setFirstOption(event.target.value.trim());
@@ -46,7 +49,7 @@ export default function AddPollForm() {
 
                 const newPoll = await dispatch(
                     addNewPoll({
-                        author,
+                        author: author.id,
                         optionOneText: firstOption,
                         optionTwoText: secondOption,
                     })
@@ -65,16 +68,16 @@ export default function AddPollForm() {
 
     return (
         <Content heading="Add New Poll">
-            <div className="bg-white rounded p-2 lg:p-6 drop-shadow-md">
+            <div className="bg-white rounded px-2 py-6 sm:px-6 drop-shadow-md">
                 <img
                     className={
-                        'mx-auto h-12 w-auto rounded mb-8' +
+                        'mx-auto h-14 w-auto rounded mb-8' +
                         (submitRequestStatus === 'pending'
                             ? ' animate-bounce'
                             : '')
                     }
-                    src="/logo512.png"
-                    alt="Employee Polls"
+                    src={author.avatarURL}
+                    alt={author.name}
                 />
                 <h2 className="text-center text-xl font-semibold">
                     Would you rather...

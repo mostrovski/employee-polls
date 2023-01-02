@@ -8,6 +8,7 @@ import AddPollForm from './features/polls/AddPollForm';
 import PollsList from './features/polls/PollsList';
 import { authenticatedUser } from './features/auth/authSlice';
 import NotFound from './components/NotFound';
+import SinglePoll from './features/polls/SinglePoll';
 
 export default function App() {
     const authenticated = useSelector(authenticatedUser);
@@ -19,6 +20,7 @@ export default function App() {
                     <Navbar />
                     <Routes>
                         <Route path="/" element={<PollsList />} />
+                        <Route path="polls/:pollId" element={<SinglePoll />} />
                         <Route path="add" element={<AddPollForm />} />
                         <Route path="leaderboard" element={<Leaderboard />} />
                     </Routes>

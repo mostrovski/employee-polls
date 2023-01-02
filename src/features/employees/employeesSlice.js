@@ -23,6 +23,10 @@ const employeesSlice = createSlice({
             const { id, author } = action.payload;
             state.entities[author].questions.push(id);
         },
+        voteSubmitted(state, action) {
+            const { userId, pollId, option } = action.payload;
+            state.entities[userId].answers[pollId] = option;
+        },
     },
     extraReducers(builder) {
         builder
@@ -42,7 +46,7 @@ const employeesSlice = createSlice({
 
 export default employeesSlice.reducer;
 
-export const { pollAdded } = employeesSlice.actions;
+export const { pollAdded, voteSubmitted } = employeesSlice.actions;
 
 export const fetchEmployeesStatus = state => state.employees.status;
 

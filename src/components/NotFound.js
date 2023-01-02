@@ -6,7 +6,7 @@ export default function NotFound() {
             <div className="w-full max-w-md space-y-8">
                 <div>
                     <img
-                        className="mx-auto h-12 w-auto rounded"
+                        className="mx-auto h-14 w-auto rounded"
                         src="/logo512.png"
                         alt="Employee Polls"
                     />
