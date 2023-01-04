@@ -1,4 +1,4 @@
-import { _authenticate, _saveQuestion, _saveQuestionAnswer } from './_data';
+import { _authenticate, _saveQuestion, _saveQuestionAnswer } from '../_data';
 
 describe('authentication', () => {
     it('accepts correct credentials', async () => {

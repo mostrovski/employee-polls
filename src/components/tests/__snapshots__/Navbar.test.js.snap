@@ -1,0 +1,306 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+Object {
+  "asFragment": [Function],
+  "baseElement": <body>
+    <div>
+      <div
+        class="min-h-full"
+      >
+        <nav
+          class="bg-gray-800"
+          data-headlessui-state=""
+        >
+          <div
+            class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8"
+          >
+            <div
+              class="flex h-16 items-center justify-between"
+            >
+              <div
+                class="flex items-center"
+              >
+                <div
+                  class="flex-shrink-0"
+                >
+                  <img
+                    alt="Employee Polls"
+                    class="h-8 w-8 rounded"
+                    src="/logo512.png"
+                  />
+                </div>
+                <div
+                  class="hidden md:block"
+                >
+                  <div
+                    class="ml-10 flex items-baseline space-x-4"
+                  >
+                    <a
+                      aria-current="page"
+                      class="bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium"
+                      href="/"
+                    >
+                      Polls
+                    </a>
+                    <a
+                      class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                      href="/add"
+                    >
+                      New Poll
+                    </a>
+                    <a
+                      class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                      href="/leaderboard"
+                    >
+                      Leaderboard
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="hidden md:block"
+              >
+                <div
+                  class="ml-4 flex items-center md:ml-6"
+                >
+                  <div
+                    class="text-white"
+                  />
+                  <div
+                    class="relative ml-3"
+                    data-headlessui-state=""
+                  >
+                    <div>
+                      <button
+                        aria-expanded="false"
+                        aria-haspopup="menu"
+                        class="flex max-w-xs items-center rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+                        data-headlessui-state=""
+                        id="headlessui-menu-button-:r0:"
+                        type="button"
+                      >
+                        <span
+                          class="sr-only"
+                        >
+                          Open user menu
+                        </span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="-mr-2 flex md:hidden"
+              >
+                <button
+                  aria-expanded="false"
+                  class="inline-flex items-center justify-center rounded-md bg-gray-800 p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+                  data-headlessui-state=""
+                  id="headlessui-disclosure-button-:r1:"
+                  type="button"
+                >
+                  <span
+                    class="sr-only"
+                  >
+                    Open main menu
+                  </span>
+                  <svg
+                    aria-hidden="true"
+                    class="block h-6 w-6"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
+        </nav>
+      </div>
+    </div>
+  </body>,
+  "container": <div>
+    <div
+      class="min-h-full"
+    >
+      <nav
+        class="bg-gray-800"
+        data-headlessui-state=""
+      >
+        <div
+          class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8"
+        >
+          <div
+            class="flex h-16 items-center justify-between"
+          >
+            <div
+              class="flex items-center"
+            >
+              <div
+                class="flex-shrink-0"
+              >
+                <img
+                  alt="Employee Polls"
+                  class="h-8 w-8 rounded"
+                  src="/logo512.png"
+                />
+              </div>
+              <div
+                class="hidden md:block"
+              >
+                <div
+                  class="ml-10 flex items-baseline space-x-4"
+                >
+                  <a
+                    aria-current="page"
+                    class="bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium"
+                    href="/"
+                  >
+                    Polls
+                  </a>
+                  <a
+                    class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                    href="/add"
+                  >
+                    New Poll
+                  </a>
+                  <a
+                    class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                    href="/leaderboard"
+                  >
+                    Leaderboard
+                  </a>
+                </div>
+              </div>
+            </div>
+            <div
+              class="hidden md:block"
+            >
+              <div
+                class="ml-4 flex items-center md:ml-6"
+              >
+                <div
+                  class="text-white"
+                />
+                <div
+                  class="relative ml-3"
+                  data-headlessui-state=""
+                >
+                  <div>
+                    <button
+                      aria-expanded="false"
+                      aria-haspopup="menu"
+                      class="flex max-w-xs items-center rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+                      data-headlessui-state=""
+                      id="headlessui-menu-button-:r0:"
+                      type="button"
+                    >
+                      <span
+                        class="sr-only"
+                      >
+                        Open user menu
+                      </span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="-mr-2 flex md:hidden"
+            >
+              <button
+                aria-expanded="false"
+                class="inline-flex items-center justify-center rounded-md bg-gray-800 p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+                data-headlessui-state=""
+                id="headlessui-disclosure-button-:r1:"
+                type="button"
+              >
+                <span
+                  class="sr-only"
+                >
+                  Open main menu
+                </span>
+                <svg
+                  aria-hidden="true"
+                  class="block h-6 w-6"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </div>
+  </div>,
+  "debug": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
+`;
