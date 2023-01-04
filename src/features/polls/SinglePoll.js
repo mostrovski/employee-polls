@@ -59,24 +59,28 @@ export default function SinglePoll() {
 
     const poll = useSelector(state => selectPollById(state, pollId));
     const author = useSelector(state => selectEmployeeById(state, poll.author));
-    const authenticated = useSelector(selectAuthenticatedEmployee);
+    const authenticatedEmployee = useSelector(selectAuthenticatedEmployee);
 
-    const response = authenticated.answers[poll.id];
+    const response = authenticatedEmployee.answers[poll.id];
 
     const optionOneVotes = poll.optionOne.votes.length;
     const optionTwoVotes = poll.optionTwo.votes.length;
     const totalVotes = optionOneVotes + optionTwoVotes;
 
     const heading =
-        author.id === authenticated.id ? 'Your Poll' : `Poll by ${author.name}`;
+        author.id === authenticatedEmployee.id
+            ? 'Your Poll'
+            : `Poll by ${author.name}`;
 
     const [responded, setResponded] = useState(Boolean(response));
     const [voteRequestStatus, setVoteRequestStatus] = useState('idle');
     const [error, setError] = useState(null);
 
     const handleVote = async option => {
+        setError(null);
+
         const vote = {
-            userId: authenticated.id,
+            userId: authenticatedEmployee.id,
             pollId: poll.id,
             option,
         };

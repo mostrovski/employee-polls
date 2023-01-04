@@ -2,7 +2,6 @@ import Content from '../../components/Content';
 import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addNewPoll } from './pollsSlice';
-import { authenticatedUser } from '../auth/authSlice';
 import { useNavigate } from 'react-router-dom';
 import {
     pollAdded,
@@ -99,6 +98,7 @@ export default function AddPollForm() {
                                     id="first-option"
                                     required
                                     className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                    value={firstOption}
                                     onChange={event =>
                                         handleFirstOptionChange(event)
                                     }
@@ -119,6 +119,7 @@ export default function AddPollForm() {
                                     id="second-option"
                                     required
                                     className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                    value={secondOption}
                                     onChange={event =>
                                         handleSecondOptionChange(event)
                                     }

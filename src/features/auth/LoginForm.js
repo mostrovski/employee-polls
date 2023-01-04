@@ -72,9 +72,10 @@ export default function LoginForm() {
                                 id="username"
                                 name="username"
                                 type="text"
+                                placeholder="Username"
                                 required
                                 className="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-violet-500 focus:outline-none focus:ring-violet-500 sm:text-sm"
-                                placeholder="Username"
+                                value={username}
                                 onChange={event => handleUsernameChange(event)}
                                 ref={usernameInputEl}
                             />
@@ -87,10 +88,10 @@ export default function LoginForm() {
                                 id="password"
                                 name="password"
                                 type="password"
-                                autoComplete="current-password"
+                                placeholder="Password"
                                 required
                                 className="relative block w-full appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-violet-500 focus:outline-none focus:ring-violet-500 sm:text-sm"
-                                placeholder="Password"
+                                value={password}
                                 onChange={event => handlePasswordChange(event)}
                             />
                         </div>
