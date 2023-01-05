@@ -1,17 +1,21 @@
-import { render } from '@testing-library/react';
-import { Provider } from 'react-redux';
-import { MemoryRouter } from 'react-router-dom';
-import { store } from '../../app/store';
+import { renderWithProviders } from '../../utils/test-utils';
 import Navbar from '../Navbar';
 
 it('renders correctly', () => {
-    const view = render(
-        <Provider store={store}>
-            <MemoryRouter>
-                <Navbar />
-            </MemoryRouter>
-        </Provider>
-    );
+    const preloadedState = {
+        auth: { user: 'sarahedo' },
+        employees: {
+            entities: {
+                sarahedo: {
+                    id: 'sarahedo',
+                    name: 'Sarah Edo',
+                    avatarURL: 'https://i.pravatar.cc/250?img=47',
+                },
+            },
+        },
+    };
+
+    const view = renderWithProviders(<Navbar />, { preloadedState });
 
     expect(view).toMatchSnapshot();
 });

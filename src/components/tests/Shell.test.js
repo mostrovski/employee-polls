@@ -1,25 +1,17 @@
-import { render } from '@testing-library/react';
-import { Provider } from 'react-redux';
-import { store } from '../../app/store';
+import { renderWithProviders } from '../../utils/test-utils';
 import Shell from '../Shell';
 
 it('renders correctly as such', () => {
-    const view = render(
-        <Provider store={store}>
-            <Shell />
-        </Provider>
-    );
+    const view = renderWithProviders(<Shell />);
 
     expect(view).toMatchSnapshot();
 });
 
 it('renders correctly as a wrapper', () => {
-    const view = render(
-        <Provider store={store}>
-            <Shell>
-                <div>Shell content goes here</div>
-            </Shell>
-        </Provider>
+    const view = renderWithProviders(
+        <Shell>
+            <div>Shell content goes here</div>
+        </Shell>
     );
 
     expect(view).toMatchSnapshot();

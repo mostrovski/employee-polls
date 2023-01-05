@@ -1,13 +1,8 @@
-import { render } from '@testing-library/react';
-import { MemoryRouter } from 'react-router-dom';
+import { renderWithProviders } from '../../utils/test-utils';
 import NotFound from '../NotFound';
 
 it('renders correctly', () => {
-    const view = render(
-        <MemoryRouter>
-            <NotFound />
-        </MemoryRouter>
-    );
+    const view = renderWithProviders(<NotFound />);
 
     expect(view).toMatchSnapshot();
 });
