@@ -40,6 +40,7 @@ export default function Leaderboard() {
                     <tbody>
                         {leaders.map(leader => (
                             <tr
+                                data-testid="leader-row"
                                 className={
                                     authenticatedEmployee === leader.id
                                         ? 'animate-pulse border-b'
@@ -50,17 +51,26 @@ export default function Leaderboard() {
                                 <td className="px-2 lg:px-8 py-4">
                                     <div className="flex items-center space-x-2">
                                         <img
+                                            data-testid="leader-avatar"
                                             className="h-8 w-8 rounded-full shrink-0"
                                             src={leader.avatar}
                                             alt={leader.name}
                                         />
-                                        <div>{leader.name}</div>
+                                        <div data-testid="leader-name">
+                                            {leader.name}
+                                        </div>
                                     </div>
                                 </td>
-                                <td className="px-2 lg:px-8 py-4">
+                                <td
+                                    className="px-2 lg:px-8 py-4"
+                                    data-testid="leader-responses"
+                                >
                                     {leader.responses}
                                 </td>
-                                <td className="px-2 lg:px-8 py-4">
+                                <td
+                                    className="px-2 lg:px-8 py-4"
+                                    data-testid="leader-polls"
+                                >
                                     {leader.polls}
                                 </td>
                             </tr>
