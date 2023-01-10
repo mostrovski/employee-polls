@@ -2,13 +2,16 @@
 
 import { render } from '@testing-library/react';
 import { Provider } from 'react-redux';
-import { MemoryRouter } from 'react-router-dom';
+import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { setupStore } from '../app/store';
+
+const isDefault = route => route.matchPath === '/' && route.currentPath === '/';
 
 export const renderWithProviders = (
     component,
     {
         preloadedState = {},
+        route = { matchPath: '/', currentPath: '/' },
         store = setupStore(preloadedState),
         ...renderOptions
     } = {}
@@ -16,13 +19,27 @@ export const renderWithProviders = (
     const Wrapper = ({ children }) => {
         return (
             <Provider store={store}>
-                <MemoryRouter>{children}</MemoryRouter>
+                <MemoryRouter initialEntries={[`${route.currentPath}`]}>
+                    {children}
+                </MemoryRouter>
             </Provider>
         );
     };
 
+    if (isDefault(route)) {
+        return {
+            store,
+            ...render(component, { wrapper: Wrapper, ...renderOptions }),
+        };
+    }
+
     return {
         store,
-        ...render(component, { wrapper: Wrapper, ...renderOptions }),
+        ...render(
+            <Routes>
+                <Route path={route.matchPath} element={component} />
+            </Routes>,
+            { wrapper: Wrapper, ...renderOptions }
+        ),
     };
 };

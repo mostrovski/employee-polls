@@ -35,13 +35,16 @@ const OptionStats = ({ option, text, response, optionVotes, totalVotes }) => {
     return (
         <div className="max-w-xl mx-auto">
             <div
+                data-testid="responded-poll-option"
                 className={
                     'select-none flex flex-wrap w-full justify-center py-2 px-4 space-x-3 text-md rounded-md border' +
                     (response === option ? ' border-violet-600' : '')
                 }
             >
-                <span className="my-1">{text}</span>
-                <span className="my-1 font-semibold">
+                <span className="my-1" data-testid="option-text">
+                    {text}
+                </span>
+                <span className="my-1 font-semibold" data-testid="option-stats">
                     {`${calculatePercentage(
                         optionVotes,
                         totalVotes
@@ -111,6 +114,7 @@ export default function SinglePoll() {
                 <div className="grid items-center lg:grid-cols-3 gap-3 my-6">
                     <div>
                         <img
+                            data-testid="author-avatar"
                             className="w-auto mx-auto rounded-full"
                             src={author.avatarURL}
                             alt={author.name}

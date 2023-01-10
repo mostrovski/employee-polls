@@ -1,12 +1,11 @@
-import { fireEvent, getByText, screen, waitFor } from '@testing-library/react';
+import { fireEvent, screen, waitFor } from '@testing-library/react';
 import { renderWithProviders } from '../../../utils/test-utils';
 import LoginForm from '../LoginForm';
 
 it('renders and behaves correctly', async () => {
     const errorMessage = 'Username or password is not valid';
 
-    const view = renderWithProviders(<LoginForm />);
-    const store = view.store;
+    const { store } = renderWithProviders(<LoginForm />);
 
     expect(screen.getByText('Sign in to your account')).toBeInTheDocument();
     expect(screen.queryByText(errorMessage)).not.toBeInTheDocument();

@@ -5,8 +5,7 @@ import LogoutButton from '../LogoutButton';
 it('renders and behaves correctly', () => {
     const preloadedState = { auth: { user: 'sarahedo' } };
 
-    const view = renderWithProviders(<LogoutButton />, { preloadedState });
-    const store = view.store;
+    const { store } = renderWithProviders(<LogoutButton />, { preloadedState });
     const button = screen.getByRole('button');
 
     expect(button).toBeInTheDocument();
