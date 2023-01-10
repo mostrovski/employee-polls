@@ -14,10 +14,11 @@ const VoteOption = ({ text, onClick }) => {
     return (
         <div className="max-w-xl mx-auto">
             <div
+                data-testid="poll-option"
                 className="bg-violet-600 cursor-pointer py-3 px-4 space-x-3 text-white text-md text-center rounded-md border"
                 onClick={onClick}
             >
-                <span>{text}</span>
+                <span data-testid="option-text">{text}</span>
             </div>
         </div>
     );
