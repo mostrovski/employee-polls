@@ -54,9 +54,9 @@ const preloadedState = {
 
 it('renders the table with leaders in the right order', () => {
     renderWithProviders(<Leaderboard />, { preloadedState });
+    expect(screen.getByText('Polling Leaders')).toBeInTheDocument();
 
     const tableRows = screen.getAllByTestId('leader-row');
-
     expect(tableRows.length).toBe(4);
 
     // First place
@@ -124,7 +124,6 @@ it('highlights the authenticated employee', () => {
     renderWithProviders(<Leaderboard />, { preloadedState });
 
     const tableRows = screen.getAllByTestId('leader-row');
-
     expect(tableRows.length).toBe(4);
 
     // authenticated employee:

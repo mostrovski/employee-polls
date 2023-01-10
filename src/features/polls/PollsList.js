@@ -19,7 +19,10 @@ const PollCard = ({ pollId }) => {
     const author = useSelector(state => selectEmployeeById(state, poll.author));
 
     return (
-        <div className="bg-white p-5 rounded drop-shadow-md text-center">
+        <div
+            data-testid="poll-card"
+            className="bg-white p-5 rounded drop-shadow-md text-center"
+        >
             <div>
                 by <span className="font-semibold">{author.name}</span>
             </div>

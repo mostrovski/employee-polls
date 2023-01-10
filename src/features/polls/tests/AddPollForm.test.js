@@ -21,11 +21,11 @@ it('renders and behaves correctly', async () => {
     const errorMessage = 'Options should be distinct';
     const { store } = renderWithProviders(<AddPollForm />, { preloadedState });
 
+    expect(screen.getByText('Add New Poll')).toBeInTheDocument();
     expect(screen.getByRole('img')).toHaveAttribute(
         'src',
         'https://i.pravatar.cc/250?img=49'
     );
-
     expect(screen.getByText('Would you rather...')).toBeInTheDocument();
 
     const firstOption = screen.getByLabelText('First option');
