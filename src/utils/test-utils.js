@@ -5,13 +5,11 @@ import { Provider } from 'react-redux';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { setupStore } from '../app/store';
 
-const isDefault = route => route.matchPath === '/' && route.currentPath === '/';
-
 export const renderWithProviders = (
     component,
     {
         preloadedState = {},
-        route = { matchPath: '/', currentPath: '/' },
+        route = { currentPath: '/', matchPath: '/', wrap: false },
         store = setupStore(preloadedState),
         ...renderOptions
     } = {}
@@ -26,20 +24,20 @@ export const renderWithProviders = (
         );
     };
 
-    if (isDefault(route)) {
+    if (route.wrap) {
         return {
             store,
-            ...render(component, { wrapper: Wrapper, ...renderOptions }),
+            ...render(
+                <Routes>
+                    <Route path={route.matchPath} element={component} />
+                </Routes>,
+                { wrapper: Wrapper, ...renderOptions }
+            ),
         };
     }
 
     return {
         store,
-        ...render(
-            <Routes>
-                <Route path={route.matchPath} element={component} />
-            </Routes>,
-            { wrapper: Wrapper, ...renderOptions }
-        ),
+        ...render(component, { wrapper: Wrapper, ...renderOptions }),
     };
 };
