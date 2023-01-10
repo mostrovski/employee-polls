@@ -5,11 +5,14 @@ const initialState = {
     user: null,
 };
 
+// Thunks
 export const login = createAsyncThunk('auth/login', async credentials => {
     const response = await _authenticate(credentials);
     return response;
 });
 
+// Slice - allows for 'mutating' logic in reducers. Because of the immer library
+// working behind the scenes, the state remains immutable.
 const authSlice = createSlice({
     name: 'auth',
     initialState,
@@ -25,8 +28,11 @@ const authSlice = createSlice({
     },
 });
 
+// Action creators
 export const { logout } = authSlice.actions;
 
+// Auth reducer
 export default authSlice.reducer;
 
+// Selectors
 export const authenticatedUser = state => state.auth.user;

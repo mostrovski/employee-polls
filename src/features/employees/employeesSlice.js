@@ -3,10 +3,11 @@ import { _getUsers } from '../../api/_data';
 
 const initialState = {
     entities: {},
-    status: 'idle',
-    error: null,
+    status: 'idle', // 'idle' | 'loading' | 'succeeded' | 'failed'
+    error: null, // null | String
 };
 
+// Thunks
 export const fetchEmployees = createAsyncThunk(
     'employees/fetchEmployees',
     async () => {
@@ -15,6 +16,8 @@ export const fetchEmployees = createAsyncThunk(
     }
 );
 
+// Slice - allows for 'mutating' logic in reducers. Because of the immer library
+// working behind the scenes, the state remains immutable.
 const employeesSlice = createSlice({
     name: 'employees',
     initialState,
@@ -44,10 +47,13 @@ const employeesSlice = createSlice({
     },
 });
 
+// Employees reducer
 export default employeesSlice.reducer;
 
+// Action creators
 export const { pollAdded, voteSubmitted } = employeesSlice.actions;
 
+// Selectors
 export const fetchEmployeesStatus = state => state.employees.status;
 
 export const selectAllEmployees = state =>

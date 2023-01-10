@@ -8,8 +8,8 @@ import {
 const initialState = {
     ids: [],
     entities: {},
-    status: 'idle',
-    error: null,
+    status: 'idle', // 'idle' | 'loading' | 'succeeded' | 'failed'
+    error: null, // null | String
 };
 
 const sortIds = polls =>
@@ -17,6 +17,7 @@ const sortIds = polls =>
         .sort((a, b) => b.timestamp - a.timestamp)
         .map(poll => poll.id);
 
+// Thunks
 export const fetchPolls = createAsyncThunk('polls/fetchPolls', async () => {
     const response = await _getQuestions();
     return response;
@@ -40,6 +41,8 @@ export const submitVote = createAsyncThunk('polls/submitVote', async vote => {
     return vote;
 });
 
+// Slice - allows for 'mutating' logic in reducers. Because of the immer library
+// working behind the scenes, the state remains immutable.
 const pollsSlice = createSlice({
     name: 'polls',
     initialState,
@@ -72,8 +75,10 @@ const pollsSlice = createSlice({
     },
 });
 
+// Polls reducer
 export default pollsSlice.reducer;
 
+// Selectors
 export const fetchPollsStatus = state => state.polls.status;
 
 export const selectAllPolls = state => Object.values(state.polls.entities);
