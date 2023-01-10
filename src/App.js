@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import Shell from './components/Shell';
 import Navbar from './components/Navbar';
@@ -14,7 +14,7 @@ export default function App() {
     const authenticated = useSelector(authenticatedUser);
 
     return (
-        <BrowserRouter>
+        <>
             {authenticated ? (
                 <Shell>
                     <Navbar />
@@ -31,6 +31,6 @@ export default function App() {
                     <Route path="*" element={<NotFound />} />
                 </Routes>
             )}
-        </BrowserRouter>
+        </>
     );
 }

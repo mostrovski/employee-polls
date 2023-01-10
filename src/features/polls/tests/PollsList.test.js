@@ -43,6 +43,8 @@ it('renders and behaves correctly', async () => {
     const notResponded = screen.getByText('Not responded');
     const responded = screen.getByText('Responded');
 
+    // Polls, to which the employee has not responded are shown by default
+
     expect(notResponded).toHaveClass('underline');
     expect(notResponded).not.toHaveClass('cursor-pointer');
     expect(responded).toHaveClass('cursor-pointer');
