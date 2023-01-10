@@ -51,6 +51,8 @@ const preloadedState = {
     },
 };
 
+const chosenOptionClass = 'border-violet-600';
+
 it('renders the poll, to which the employee has already responded', () => {
     const route = {
         matchPath: '/polls/:pollId',
@@ -66,9 +68,8 @@ it('renders the poll, to which the employee has already responded', () => {
     expect(screen.getByText('Would you rather')).toBeInTheDocument();
 
     const options = screen.getAllByTestId('responded-poll-option');
-    const chosenOptionClass = 'border-violet-600';
-
     expect(options.length).toBe(2);
+
     // First option:
     expect(options[0]).toHaveClass(chosenOptionClass);
     expect(within(options[0]).getByTestId('option-text')).toHaveTextContent(
@@ -82,6 +83,7 @@ it('renders the poll, to which the employee has already responded', () => {
     expect(within(options[0]).getByTestId('option-stats')).toHaveTextContent(
         '50% (1 voted)'
     );
+
     // Second option:
     expect(options[1]).not.toHaveClass(chosenOptionClass);
     expect(within(options[1]).getByTestId('option-text')).toHaveTextContent(
@@ -116,7 +118,6 @@ it('renders the poll, to which the employee has not responded yet', async () => 
     expect(screen.queryByText('voted')).not.toBeInTheDocument();
 
     const options = screen.getAllByTestId('poll-option');
-
     expect(options.length).toBe(2);
 
     expect(options[0]).toHaveClass('cursor-pointer');
@@ -129,11 +130,10 @@ it('renders the poll, to which the employee has not responded yet', async () => 
         'Build our new application with Typescript'
     );
 
-    // Changes to displaying the stats on click:
+    // Changes to displaying the stats when responded:
     fireEvent.click(options[0]);
     options.forEach(option => expect(option).not.toBeInTheDocument());
 
-    const chosenOptionClass = 'border-violet-600';
     const optionStats = screen.getAllByTestId('responded-poll-option');
     expect(optionStats.length).toBe(2);
 
