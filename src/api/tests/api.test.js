@@ -21,6 +21,19 @@ describe('authentication', () => {
         await expect(_authenticate(credentials)).rejects.toBe(
             'Username or password is not valid'
         );
+
+        credentials.password = '';
+
+        await expect(_authenticate(credentials)).rejects.toBe(
+            'Username or password is not valid'
+        );
+
+        credentials.password = 'abc321';
+        credentials.username = '';
+
+        await expect(_authenticate(credentials)).rejects.toBe(
+            'Username or password is not valid'
+        );
     });
 });
 

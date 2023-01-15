@@ -1,7 +1,25 @@
+const userCredentials = [
+    {
+        username: 'sarahedo',
+        password: 'password123',
+    },
+    {
+        username: 'tylermcginnis',
+        password: 'abc321',
+    },
+    {
+        username: 'mtsamis',
+        password: 'xyz123',
+    },
+    {
+        username: 'zoshikanlu',
+        password: 'pass246',
+    },
+];
+
 let users = {
     sarahedo: {
         id: 'sarahedo',
-        password: 'password123',
         name: 'Sarah Edo',
         avatarURL: 'https://i.pravatar.cc/250?img=47',
         answers: {
@@ -14,7 +32,6 @@ let users = {
     },
     tylermcginnis: {
         id: 'tylermcginnis',
-        password: 'abc321',
         name: 'Tyler McGinnis',
         avatarURL: 'https://i.pravatar.cc/250?img=67',
         answers: {
@@ -25,7 +42,6 @@ let users = {
     },
     mtsamis: {
         id: 'mtsamis',
-        password: 'xyz123',
         name: 'Mike Tsamis',
         avatarURL: 'https://i.pravatar.cc/250?img=59',
         answers: {
@@ -37,7 +53,6 @@ let users = {
     },
     zoshikanlu: {
         id: 'zoshikanlu',
-        password: 'pass246',
         name: 'Zenobia Oshikanlu',
         avatarURL: 'https://i.pravatar.cc/250?img=49',
         answers: {
@@ -227,9 +242,11 @@ export function _authenticate(credentials) {
     return new Promise((resolve, reject) => {
         setTimeout(() => {
             if (
-                !username ||
-                !password ||
-                users[username]?.password !== password
+                !userCredentials.find(
+                    record =>
+                        record.username === username &&
+                        record.password === password
+                )
             ) {
                 reject('Username or password is not valid');
             }
