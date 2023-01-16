@@ -1,14 +1,14 @@
-import Content from '../../components/Content';
 import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addNewPoll } from './pollsSlice';
 import { useNavigate } from 'react-router-dom';
+import { addNewPoll } from './pollsSlice';
 import {
     pollAdded,
     selectAuthenticatedEmployee,
 } from '../employees/employeesSlice';
-import FlashError from '../../components/FlashError';
 import Button from '../../components/Button';
+import Content from '../../components/Content';
+import FlashError from '../../components/FlashError';
 import PendingContent from '../../components/PendingContent';
 
 export default function AddPollForm() {

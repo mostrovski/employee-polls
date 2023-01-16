@@ -36,6 +36,29 @@ it('renders login form if user is not authenticated and route is unknown', () =>
     expect(screen.getByRole('button')).toBeInTheDocument();
 });
 
+it('redirects to 404 after login if route is unknown', async () => {
+    renderWithProviders(<App />, {
+        route: { currentPath: '/some/random/stuff' },
+    });
+
+    fireEvent.change(screen.getByPlaceholderText('Username'), {
+        target: { value: 'tylermcginnis' },
+    });
+    fireEvent.change(screen.getByPlaceholderText('Password'), {
+        target: { value: 'abc321' },
+    });
+    fireEvent.click(screen.getByRole('button'));
+
+    await waitFor(
+        () => {
+            expect(
+                screen.getByText('Failed to find anything...')
+            ).toBeInTheDocument();
+        },
+        { timeout: 2000 }
+    );
+});
+
 it('renders login form if user is not authenticated and route is meant for authenticated users', () => {
     renderWithProviders(<App />, {
         route: { currentPath: '/add' },
@@ -45,6 +68,27 @@ it('renders login form if user is not authenticated and route is meant for authe
     expect(screen.getByPlaceholderText('Username')).toBeInTheDocument();
     expect(screen.getByPlaceholderText('Password')).toBeInTheDocument();
     expect(screen.getByRole('button')).toBeInTheDocument();
+});
+
+it('renders intended component after login if route is known', async () => {
+    renderWithProviders(<App />, {
+        route: { currentPath: '/add' },
+    });
+
+    fireEvent.change(screen.getByPlaceholderText('Username'), {
+        target: { value: 'tylermcginnis' },
+    });
+    fireEvent.change(screen.getByPlaceholderText('Password'), {
+        target: { value: 'abc321' },
+    });
+    fireEvent.click(screen.getByRole('button'));
+
+    await waitFor(
+        () => {
+            expect(screen.getByText('Add New Poll')).toBeInTheDocument();
+        },
+        { timeout: 2000 }
+    );
 });
 
 it('integrates', async () => {

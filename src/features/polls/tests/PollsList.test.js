@@ -1,7 +1,11 @@
 import { fireEvent, screen, waitFor, within } from '@testing-library/react';
+import format from 'date-fns/format';
 import { renderWithProviders } from '../../../utils/test-utils';
 import PollsList from '../PollsList';
 import { fetchPolls } from '../pollsSlice';
+
+const formatTimestamp = value =>
+    format(new Date(value), "MMMM d, yyyy, 'at' HH:mm:ss");
 
 const preloadedState = {
     auth: { user: 'mtsamis' },
@@ -60,7 +64,7 @@ it('renders and behaves correctly', async () => {
         within(notRespondedPolls[0]).getByText('Sarah Edo')
     ).toBeInTheDocument();
     expect(
-        within(notRespondedPolls[0]).getByText('March 3, 2017, at 23:22:47')
+        within(notRespondedPolls[0]).getByText(formatTimestamp(1488579767190))
     ).toBeInTheDocument();
     expect(within(notRespondedPolls[0]).getByRole('link')).toHaveAttribute(
         'href',
@@ -71,7 +75,7 @@ it('renders and behaves correctly', async () => {
         within(notRespondedPolls[1]).getByText('Tyler McGinnis')
     ).toBeInTheDocument();
     expect(
-        within(notRespondedPolls[1]).getByText('December 24, 2016, at 12:42:47')
+        within(notRespondedPolls[1]).getByText(formatTimestamp(1482579767190))
     ).toBeInTheDocument();
     expect(within(notRespondedPolls[1]).getByRole('link')).toHaveAttribute(
         'href',
@@ -82,7 +86,7 @@ it('renders and behaves correctly', async () => {
         within(notRespondedPolls[2]).getByText('Sarah Edo')
     ).toBeInTheDocument();
     expect(
-        within(notRespondedPolls[2]).getByText('June 29, 2016, at 04:21:12')
+        within(notRespondedPolls[2]).getByText(formatTimestamp(1467166872634))
     ).toBeInTheDocument();
     expect(within(notRespondedPolls[2]).getByRole('link')).toHaveAttribute(
         'href',
@@ -105,7 +109,7 @@ it('renders and behaves correctly', async () => {
         within(respondedPolls[0]).getByText('Mike Tsamis')
     ).toBeInTheDocument();
     expect(
-        within(respondedPolls[0]).getByText('April 30, 2017, at 21:16:07')
+        within(respondedPolls[0]).getByText(formatTimestamp(1493579767190))
     ).toBeInTheDocument();
     expect(within(respondedPolls[0]).getByRole('link')).toHaveAttribute(
         'href',
@@ -116,7 +120,7 @@ it('renders and behaves correctly', async () => {
         within(respondedPolls[1]).getByText('Tyler McGinnis')
     ).toBeInTheDocument();
     expect(
-        within(respondedPolls[1]).getByText('March 15, 2017, at 13:09:27')
+        within(respondedPolls[1]).getByText(formatTimestamp(1489579767190))
     ).toBeInTheDocument();
     expect(within(respondedPolls[1]).getByRole('link')).toHaveAttribute(
         'href',
@@ -127,7 +131,7 @@ it('renders and behaves correctly', async () => {
         within(respondedPolls[2]).getByText('Mike Tsamis')
     ).toBeInTheDocument();
     expect(
-        within(respondedPolls[2]).getByText('July 14, 2016, at 09:02:47')
+        within(respondedPolls[2]).getByText(formatTimestamp(1468479767190))
     ).toBeInTheDocument();
     expect(within(respondedPolls[2]).getByRole('link')).toHaveAttribute(
         'href',

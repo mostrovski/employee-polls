@@ -1,13 +1,13 @@
 import { useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import format from 'date-fns/format';
 import { fetchPollsStatus, selectPollIds, selectPollById } from './pollsSlice';
-import Content from '../../components/Content';
 import {
     selectAuthenticatedEmployee,
     selectEmployeeById,
 } from '../employees/employeesSlice';
-import { Link } from 'react-router-dom';
+import Content from '../../components/Content';
 import PendingContent from '../../components/PendingContent';
 
 const PollCard = ({ pollId }) => {

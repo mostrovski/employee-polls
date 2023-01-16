@@ -1,7 +1,9 @@
+import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import Content from '../../components/Content';
 import FlashError from '../../components/FlashError';
+import PendingContent from '../../components/PendingContent';
 import { fetchPollsStatus, selectPollById, submitVote } from './pollsSlice';
 import {
     fetchEmployeesStatus,
@@ -9,8 +11,6 @@ import {
     selectEmployeeById,
     voteSubmitted,
 } from '../employees/employeesSlice';
-import { useState } from 'react';
-import PendingContent from '../../components/PendingContent';
 
 const VoteOption = ({ text, onClick }) => {
     return (
@@ -88,7 +88,7 @@ export default function SinglePoll() {
     }
 
     if (pollNotFound) {
-        navigate('/');
+        navigate('/404');
     }
 
     const optionOneVotes = poll.optionOne.votes.length;

@@ -3,8 +3,8 @@
 import { useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { login } from './authSlice';
-import FlashError from '../../components/FlashError';
 import Button from '../../components/Button';
+import FlashError from '../../components/FlashError';
 
 export default function LoginForm() {
     const [username, setUsername] = useState('');

@@ -1,9 +1,9 @@
 import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
-import Content from '../../components/Content';
-import PendingContent from '../../components/PendingContent';
 import { authenticatedUser } from '../auth/authSlice';
 import { selectAllEmployees } from './employeesSlice';
+import Content from '../../components/Content';
+import PendingContent from '../../components/PendingContent';
 
 export default function Leaderboard() {
     const heading = 'Polling Leaders';
