@@ -5,6 +5,7 @@ import SinglePoll from '../SinglePoll';
 const preloadedState = {
     auth: { user: 'tylermcginnis' },
     employees: {
+        status: 'succeeded',
         entities: {
             sarahedo: {
                 id: 'sarahedo',
@@ -22,6 +23,7 @@ const preloadedState = {
         },
     },
     polls: {
+        status: 'succeeded',
         entities: {
             '8xf0y6ziyjabvozdd253nd': {
                 id: '8xf0y6ziyjabvozdd253nd',

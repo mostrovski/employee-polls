@@ -1,18 +1,14 @@
-import { useEffect, useMemo, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useMemo, useState } from 'react';
+import { useSelector } from 'react-redux';
 import format from 'date-fns/format';
-import {
-    fetchPolls,
-    fetchPollsStatus,
-    selectPollIds,
-    selectPollById,
-} from './pollsSlice';
+import { fetchPollsStatus, selectPollIds, selectPollById } from './pollsSlice';
 import Content from '../../components/Content';
 import {
     selectAuthenticatedEmployee,
     selectEmployeeById,
 } from '../employees/employeesSlice';
 import { Link } from 'react-router-dom';
+import PendingContent from '../../components/PendingContent';
 
 const PollCard = ({ pollId }) => {
     const poll = useSelector(state => selectPollById(state, pollId));
@@ -50,19 +46,13 @@ const PollsGrid = ({ pollIds }) => {
 };
 
 export default function PollsList() {
-    const [showResponded, setShowResponded] = useState(false);
+    const heading = 'Employee Polls';
 
-    const dispatch = useDispatch();
+    const [showResponded, setShowResponded] = useState(false);
 
     const pollIds = useSelector(selectPollIds);
     const pollsStatus = useSelector(fetchPollsStatus);
     const authenticatedEmployee = useSelector(selectAuthenticatedEmployee);
-
-    useEffect(() => {
-        if (pollsStatus === 'idle') {
-            dispatch(fetchPolls());
-        }
-    }, [pollsStatus, dispatch]);
 
     const employeeAnswers = Object.keys(authenticatedEmployee?.answers ?? {});
 
@@ -76,15 +66,9 @@ export default function PollsList() {
         [pollIds, employeeAnswers]
     );
 
-    let content = (
-        <div className="h-96 rounded-lg bg-white flex justify-center items-center animate-pulse">
-            <div className="text-7xl">...</div>
-        </div>
-    );
-
     if (pollsStatus === 'succeeded' && authenticatedEmployee) {
-        content = (
-            <>
+        return (
+            <Content heading={heading}>
                 <div className="flex space-x-3">
                     <span
                         className={
@@ -113,9 +97,9 @@ export default function PollsList() {
                 ) : (
                     <PollsGrid pollIds={notResponded} />
                 )}
-            </>
+            </Content>
         );
     }
 
-    return <Content heading="Employee Polls">{content}</Content>;
+    return <PendingContent heading={heading} />;
 }

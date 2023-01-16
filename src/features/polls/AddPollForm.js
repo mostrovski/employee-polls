@@ -9,20 +9,27 @@ import {
 } from '../employees/employeesSlice';
 import FlashError from '../../components/FlashError';
 import Button from '../../components/Button';
+import PendingContent from '../../components/PendingContent';
 
 export default function AddPollForm() {
+    const heading = 'Add New Poll';
+
     const [firstOption, setFirstOption] = useState('');
     const [secondOption, setSecondOption] = useState('');
     const [submitRequestStatus, setSubmitRequestStatus] = useState('idle');
     const [error, setError] = useState(null);
 
-    const firstOptionEl = useRef(null);
-    useEffect(() => firstOptionEl.current.focus(), []);
-
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
     const author = useSelector(selectAuthenticatedEmployee);
+
+    const firstOptionEl = useRef(null);
+    useEffect(() => author && firstOptionEl.current.focus(), [author]);
+
+    if (!author) {
+        return <PendingContent heading={heading} />;
+    }
 
     const handleFirstOptionChange = event =>
         setFirstOption(event.target.value.trim());
@@ -66,7 +73,7 @@ export default function AddPollForm() {
     };
 
     return (
-        <Content heading="Add New Poll">
+        <Content heading={heading}>
             <div className="bg-white rounded px-2 py-6 sm:px-6 drop-shadow-md">
                 <img
                     className={

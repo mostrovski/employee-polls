@@ -1,14 +1,16 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import Content from '../../components/Content';
 import FlashError from '../../components/FlashError';
-import { selectPollById, submitVote } from './pollsSlice';
+import { fetchPollsStatus, selectPollById, submitVote } from './pollsSlice';
 import {
+    fetchEmployeesStatus,
     selectAuthenticatedEmployee,
     selectEmployeeById,
     voteSubmitted,
 } from '../employees/employeesSlice';
 import { useState } from 'react';
+import PendingContent from '../../components/PendingContent';
 
 const VoteOption = ({ text, onClick }) => {
     return (
@@ -60,12 +62,34 @@ export default function SinglePoll() {
     const { pollId } = useParams();
 
     const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    const employeesStatus = useSelector(fetchEmployeesStatus);
+    const pollsStatus = useSelector(fetchPollsStatus);
 
     const poll = useSelector(state => selectPollById(state, pollId));
-    const author = useSelector(state => selectEmployeeById(state, poll.author));
+    const author = useSelector(state =>
+        selectEmployeeById(state, poll?.author)
+    );
     const authenticatedEmployee = useSelector(selectAuthenticatedEmployee);
 
-    const response = authenticatedEmployee.answers[poll.id];
+    const response = authenticatedEmployee?.answers[poll?.id];
+
+    const [responded, setResponded] = useState(Boolean(response));
+    const [voteRequestStatus, setVoteRequestStatus] = useState('idle');
+    const [error, setError] = useState(null);
+
+    const stateIsNotReady =
+        employeesStatus !== 'succeeded' || pollsStatus !== 'succeeded';
+    const pollNotFound = !poll && !stateIsNotReady;
+
+    if (stateIsNotReady) {
+        return <PendingContent heading="Poll" />;
+    }
+
+    if (pollNotFound) {
+        navigate('/');
+    }
 
     const optionOneVotes = poll.optionOne.votes.length;
     const optionTwoVotes = poll.optionTwo.votes.length;
@@ -75,10 +99,6 @@ export default function SinglePoll() {
         author.id === authenticatedEmployee.id
             ? 'Your Poll'
             : `Poll by ${author.name}`;
-
-    const [responded, setResponded] = useState(Boolean(response));
-    const [voteRequestStatus, setVoteRequestStatus] = useState('idle');
-    const [error, setError] = useState(null);
 
     const handleVote = async option => {
         setError(null);
@@ -114,12 +134,14 @@ export default function SinglePoll() {
             <div className="bg-white rounded py-6 drop-shadow-md">
                 <div className="grid items-center lg:grid-cols-3 gap-3 my-6">
                     <div>
-                        <img
-                            data-testid="author-avatar"
-                            className="w-auto mx-auto rounded-full"
-                            src={author.avatarURL}
-                            alt={author.name}
-                        />
+                        {author && (
+                            <img
+                                data-testid="author-avatar"
+                                className="w-auto mx-auto rounded-full"
+                                src={author.avatarURL}
+                                alt={author.name}
+                            />
+                        )}
                     </div>
 
                     <div className="lg:col-span-2 text-center space-y-6 px-2">

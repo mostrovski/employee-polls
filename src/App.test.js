@@ -2,14 +2,14 @@ import { fireEvent, screen, waitFor, within } from '@testing-library/react';
 import App from './App';
 import { renderWithProviders } from './utils/test-utils';
 
-it('renders login form if there is no authenticated user', () => {
+it('renders login form at root if there is no authenticated user', () => {
     renderWithProviders(<App />);
 
     expect(screen.queryByText('Employee Polls')).not.toBeInTheDocument();
     expect(screen.getByText('Sign in to your account')).toBeInTheDocument();
     expect(screen.getByPlaceholderText('Username')).toBeInTheDocument();
     expect(screen.getByPlaceholderText('Password')).toBeInTheDocument();
-    expect(screen.getByRole('button', { type: 'submit' })).toBeInTheDocument();
+    expect(screen.getByRole('button')).toBeInTheDocument();
 });
 
 it('renders polls list for the authenticated user', () => {
@@ -25,26 +25,26 @@ it('renders polls list for the authenticated user', () => {
     expect(screen.queryByText('Submit')).not.toBeInTheDocument();
 });
 
-it('renders "not found" if user is not authenticated and route is unknown', () => {
+it('renders login form if user is not authenticated and route is unknown', () => {
     renderWithProviders(<App />, {
         route: { currentPath: '/some/random/stuff' },
     });
 
-    expect(screen.getByText('Failed to find anything...')).toBeInTheDocument();
-    expect(screen.getByRole('link')).toHaveTextContent(
-        'Sign in to your account'
-    );
+    expect(screen.getByText('Sign in to your account')).toBeInTheDocument();
+    expect(screen.getByPlaceholderText('Username')).toBeInTheDocument();
+    expect(screen.getByPlaceholderText('Password')).toBeInTheDocument();
+    expect(screen.getByRole('button')).toBeInTheDocument();
 });
 
-it('renders "not found" if user is not authenticated and route is meant for authenticated users', () => {
+it('renders login form if user is not authenticated and route is meant for authenticated users', () => {
     renderWithProviders(<App />, {
         route: { currentPath: '/add' },
     });
 
-    expect(screen.getByText('Failed to find anything...')).toBeInTheDocument();
-    expect(screen.getByRole('link')).toHaveTextContent(
-        'Sign in to your account'
-    );
+    expect(screen.getByText('Sign in to your account')).toBeInTheDocument();
+    expect(screen.getByPlaceholderText('Username')).toBeInTheDocument();
+    expect(screen.getByPlaceholderText('Password')).toBeInTheDocument();
+    expect(screen.getByRole('button')).toBeInTheDocument();
 });
 
 it('integrates', async () => {

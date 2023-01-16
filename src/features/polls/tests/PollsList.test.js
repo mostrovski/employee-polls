@@ -1,6 +1,7 @@
 import { fireEvent, screen, waitFor, within } from '@testing-library/react';
 import { renderWithProviders } from '../../../utils/test-utils';
 import PollsList from '../PollsList';
+import { fetchPolls } from '../pollsSlice';
 
 const preloadedState = {
     auth: { user: 'mtsamis' },
@@ -35,6 +36,8 @@ it('renders and behaves correctly', async () => {
     const { store } = renderWithProviders(<PollsList />, { preloadedState });
 
     expect(screen.getByText('Employee Polls')).toBeInTheDocument();
+
+    store.dispatch(fetchPolls());
 
     await waitFor(() => expect(store.getState().polls.ids.length).toBe(6), {
         timeout: 2000,

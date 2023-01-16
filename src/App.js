@@ -27,8 +27,7 @@ export default function App() {
                 </Shell>
             ) : (
                 <Routes>
-                    <Route path="/" element={<LoginForm />} />
-                    <Route path="*" element={<NotFound />} />
+                    <Route path="*" element={<LoginForm />} />
                 </Routes>
             )}
         </>
