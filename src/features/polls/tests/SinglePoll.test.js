@@ -57,8 +57,8 @@ const chosenOptionClass = 'border-violet-600';
 
 it('renders the poll, to which the employee has already responded', () => {
     const route = {
-        currentPath: '/polls/vthrdm985a262al8qx3do',
-        matchPath: '/polls/:pollId',
+        currentPath: '/questions/vthrdm985a262al8qx3do',
+        matchPath: '/questions/:question_id',
         wrap: true,
     };
 
@@ -104,8 +104,8 @@ it('renders the poll, to which the employee has already responded', () => {
 
 it('renders the poll, to which the employee has not responded yet', async () => {
     const route = {
-        currentPath: '/polls/8xf0y6ziyjabvozdd253nd',
-        matchPath: '/polls/:pollId',
+        currentPath: '/questions/8xf0y6ziyjabvozdd253nd',
+        matchPath: '/questions/:question_id',
         wrap: true,
     };
 

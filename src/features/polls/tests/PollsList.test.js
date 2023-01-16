@@ -64,7 +64,7 @@ it('renders and behaves correctly', async () => {
     ).toBeInTheDocument();
     expect(within(notRespondedPolls[0]).getByRole('link')).toHaveAttribute(
         'href',
-        '/polls/am8ehyc8byjqgar0jgpub9'
+        '/questions/am8ehyc8byjqgar0jgpub9'
     );
 
     expect(
@@ -75,7 +75,7 @@ it('renders and behaves correctly', async () => {
     ).toBeInTheDocument();
     expect(within(notRespondedPolls[1]).getByRole('link')).toHaveAttribute(
         'href',
-        '/polls/loxhs1bqm25b708cmbf3g'
+        '/questions/loxhs1bqm25b708cmbf3g'
     );
 
     expect(
@@ -86,7 +86,7 @@ it('renders and behaves correctly', async () => {
     ).toBeInTheDocument();
     expect(within(notRespondedPolls[2]).getByRole('link')).toHaveAttribute(
         'href',
-        '/polls/8xf0y6ziyjabvozdd253nd'
+        '/questions/8xf0y6ziyjabvozdd253nd'
     );
 
     // Switch to the polls, to which the employee has already responded
@@ -109,7 +109,7 @@ it('renders and behaves correctly', async () => {
     ).toBeInTheDocument();
     expect(within(respondedPolls[0]).getByRole('link')).toHaveAttribute(
         'href',
-        '/polls/xj352vofupe1dqz9emx13r'
+        '/questions/xj352vofupe1dqz9emx13r'
     );
 
     expect(
@@ -120,7 +120,7 @@ it('renders and behaves correctly', async () => {
     ).toBeInTheDocument();
     expect(within(respondedPolls[1]).getByRole('link')).toHaveAttribute(
         'href',
-        '/polls/vthrdm985a262al8qx3do'
+        '/questions/vthrdm985a262al8qx3do'
     );
 
     expect(
@@ -131,6 +131,6 @@ it('renders and behaves correctly', async () => {
     ).toBeInTheDocument();
     expect(within(respondedPolls[2]).getByRole('link')).toHaveAttribute(
         'href',
-        '/polls/6ni6ok3ym7mf1p33lnez'
+        '/questions/6ni6ok3ym7mf1p33lnez'
     );
 });

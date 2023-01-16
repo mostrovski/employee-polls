@@ -59,7 +59,7 @@ const OptionStats = ({ option, text, response, optionVotes, totalVotes }) => {
 };
 
 export default function SinglePoll() {
-    const { pollId } = useParams();
+    const { question_id: pollId } = useParams();
 
     const dispatch = useDispatch();
     const navigate = useNavigate();

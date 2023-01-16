@@ -28,7 +28,10 @@ const PollCard = ({ pollId }) => {
                     "MMMM d, yyyy, 'at' HH:mm:ss"
                 )}
             </div>
-            <Link to={`/polls/${poll.id}`} className="link-primary block mt-3">
+            <Link
+                to={`/questions/${poll.id}`}
+                className="link-primary block mt-3"
+            >
                 Show
             </Link>
         </div>
