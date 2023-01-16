@@ -1,14 +1,14 @@
 # Employee Polls
 
-## A demo React & Redux project.
+## A demo React project showcasing work with the global state managed by Redux.
 
 ### Minimum requirements
 
 #### UI:
 
 ##### User
-- The application allows the user to log out and log back in. The user should be
-  logged in to submit new polling questions, vote, and view the leaderboard;
+- The application allows the user to log out and log back in;
+- The user should be logged in to submit new polling questions, vote, and view the leaderboard;
 - Once the user logs in, the home page is shown;
 - The name of the logged in user is visible on the page;
 ##### Home page
@@ -59,7 +59,20 @@
 
 ### Approach
 
-TODO
+I decided to experiment with [Tailwind UI](https://tailwindui.com/)
+to quickly compose decently looking visual blocks representing two major states of the application:
+
+- Login form: initial render and after logout;
+- Application shell: after login.
+
+As for the state management, I opted for [Redux Toolkit](https://redux-toolkit.js.org/), meaning:
+
+- Relying heavily on `createSlice` to write reducer logic and extract action creators;
+- Using `createAsyncThunk` and corresponding utilities to manage async logic;
+- Communicating with the store with the help of `useSelector` (reading) and `useDispatch` (changing) hooks.
+
+I came up with three *features*: auth, employees, and polls.
+Each feature got its slice of the store, and associated components.
 
 ### How to run it
 
@@ -86,6 +99,8 @@ TODO
 7. If it didn't happen automatically during the build, open provided link in your browser.
 
 ### Tests
+
+The application is tested with [Jest](https://jestjs.io/) and [React Testing Library](https://testing-library.com/docs/react-testing-library/intro).
 
 Execute `npm test` to run all the test suites.
 
