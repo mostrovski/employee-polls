@@ -1,3 +1,4 @@
+name: ep
 services:
   app:
     image: node:latest

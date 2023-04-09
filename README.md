@@ -76,11 +76,11 @@ Each feature got its slice of the store, and associated components.
 
 ### How to run it
 
-1. Make sure you have [Node.js](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm) installed.
+1. Make sure you have [Docker](https://docs.docker.com/get-docker/) installed.
 2. Clone, or download and extract the repository.
 3. Change to the root of the project.
-4. Run `npm install` to install the dependencies.
-5. Run `npm start` to initiate the development build.
+4. Run `docker compose up app`.
+5. Wait until it builds.
 6. In your terminal, you should see something like this:
 
    ```bash
@@ -102,7 +102,9 @@ Each feature got its slice of the store, and associated components.
 
 The application is tested with [Jest](https://jestjs.io/) and [React Testing Library](https://testing-library.com/docs/react-testing-library/intro).
 
-Execute `npm test` to run all the test suites.
+Execute `docker exec -it ep-app-1 npm test` to run all the test suites in the running container with the name *ep-app-1*.
+
+Instead of the name, one can also use the container id. List active containers with `docker ps` to check these values.
 
 ### Kudos
 
