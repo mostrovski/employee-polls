@@ -2,6 +2,7 @@ import dotenv from "dotenv";
 import express from "express";
 import path from "path";
 import { fileURLToPath } from "url";
+import db from "./models/index.js";
 
 // Read environment variables.
 dotenv.config();
@@ -16,6 +17,7 @@ app.use(express.json());
 
 // Define routes.
 app.get("/", async (req, res) => {
+  console.log(db.User.findAll());
   return res.json({
     message:
       "Connection has been established successfully. Hello from a container!",

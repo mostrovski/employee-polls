@@ -11,6 +11,12 @@ services:
       MYSQL_ROOT_PASSWORD: db
     volumes:
       - ./data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p$$MYSQL_ROOT_PASSWORD"]
+      interval: 10s
+      timeout: 10s
+      retries: 5
+      start_period: 10s
   api:
     image: node:latest
     ports:
@@ -25,8 +31,9 @@ services:
       - ./api:/api
     working_dir: /api
     depends_on:
-      - mysql
-    command: bash -c "npm i && npm start"
+      mysql:
+        condition: service_healthy
+    command: bash -c "npm i && npm run migrate && npm start"
   app:
     image: node:latest
     ports:
