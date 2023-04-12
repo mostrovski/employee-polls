@@ -1,0 +1,22 @@
+{
+  "name": "employee-pols-api",
+  "version": "1.0.0",
+  "description": "An API for the employee polls app.",
+  "main": "index.mjs",
+  "scripts": {
+    "start": "node index.mjs",
+    "migrate": "npx sequelize-cli db:migrate",
+    "seed": "npx sequelize-cli db:seed:all"
+  },
+  "author": "Andrei Ostrovskii",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "express": "^4.17.3",
+    "mariadb": "^3.0.2",
+    "sequelize": "^6.28.0"
+  },
+  "devDependencies": {
+    "sequelize-cli": "^6.6.0"
+  }
+}
