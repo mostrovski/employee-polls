@@ -33,7 +33,7 @@ services:
     depends_on:
       mysql:
         condition: service_healthy
-    command: bash -c "npm i && npm run migrate && npm start"
+    command: bash -c "npm i && npm run migrate && npm run seed && npm start"
   app:
     image: node:latest
     ports:
