@@ -8,8 +8,8 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      User.hasMany(models.Poll);
-      User.belongsToMany(models.Option, { through: models.Vote });
+      User.hasMany(models.poll, { foreignKey: "authorId" });
+      User.belongsToMany(models.option, { as: "votes", through: models.vote });
     }
   }
   User.init(
@@ -22,7 +22,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      modelName: "User",
+      modelName: "user",
       tableName: "users",
     }
   );

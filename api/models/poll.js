@@ -8,8 +8,8 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      Poll.belongsTo(models.User, { foreignKey: "authorId" });
-      Poll.hasMany(models.Option);
+      Poll.belongsTo(models.user, { as: "author", foreignKey: "authorId" });
+      Poll.hasMany(models.option);
     }
   }
   Poll.init(
@@ -19,7 +19,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      modelName: "Poll",
+      modelName: "poll",
       tableName: "polls",
     }
   );

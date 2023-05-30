@@ -8,8 +8,8 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      Option.belongsTo(models.Poll);
-      Option.belongsToMany(models.User, { through: models.Vote });
+      Option.belongsTo(models.poll);
+      Option.belongsToMany(models.user, { as: "voters", through: models.vote });
     }
   }
   Option.init(
@@ -19,7 +19,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      modelName: "Option",
+      modelName: "option",
       tableName: "options",
     }
   );
