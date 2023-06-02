@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import Content from '../../components/Content';
@@ -66,8 +66,12 @@ export default function SinglePoll() {
 
     const employeesStatus = useSelector(fetchEmployeesStatus);
     const pollsStatus = useSelector(fetchPollsStatus);
+    const stateIsReady =
+        employeesStatus === 'succeeded' && pollsStatus === 'succeeded';
 
     const poll = useSelector(state => selectPollById(state, pollId));
+    const pollNotFound = !poll && stateIsReady;
+
     const author = useSelector(state =>
         selectEmployeeById(state, poll?.author)
     );
@@ -79,21 +83,26 @@ export default function SinglePoll() {
     const [voteRequestStatus, setVoteRequestStatus] = useState('idle');
     const [error, setError] = useState(null);
 
-    const stateIsNotReady =
-        employeesStatus !== 'succeeded' || pollsStatus !== 'succeeded';
-    const pollNotFound = !poll && !stateIsNotReady;
+    useEffect(() => {
+        setResponded(Boolean(response));
+    }, [response]);
 
-    if (stateIsNotReady) {
+    useEffect(() => {
+        if (pollNotFound) {
+            navigate('/404');
+        }
+    }, [navigate, pollNotFound]);
+
+    if (!stateIsReady || pollNotFound) {
         return <PendingContent heading="Poll" />;
     }
 
-    if (pollNotFound) {
-        navigate('/404');
-    }
+    const pollOptions = Object.values(poll.options);
 
-    const optionOneVotes = poll.optionOne.votes.length;
-    const optionTwoVotes = poll.optionTwo.votes.length;
-    const totalVotes = optionOneVotes + optionTwoVotes;
+    const totalVotes = pollOptions.reduce(
+        (total, current) => (total += current.votes.length),
+        0
+    );
 
     const heading =
         author.id === authenticatedEmployee.id
@@ -150,36 +159,24 @@ export default function SinglePoll() {
                         </h2>
                         <FlashError message={error} />
 
-                        {responded ? (
-                            <>
-                                <OptionStats
-                                    option="optionOne"
-                                    text={poll.optionOne.text}
-                                    response={response}
-                                    optionVotes={optionOneVotes}
-                                    totalVotes={totalVotes}
-                                />
-
-                                <OptionStats
-                                    option="optionTwo"
-                                    text={poll.optionTwo.text}
-                                    response={response}
-                                    optionVotes={optionTwoVotes}
-                                    totalVotes={totalVotes}
-                                />
-                            </>
-                        ) : (
-                            <>
-                                <VoteOption
-                                    text={poll.optionOne.text}
-                                    onClick={() => handleVote('optionOne')}
-                                />
-                                <VoteOption
-                                    text={poll.optionTwo.text}
-                                    onClick={() => handleVote('optionTwo')}
-                                />
-                            </>
-                        )}
+                        {responded
+                            ? pollOptions.map(option => (
+                                  <OptionStats
+                                      key={option.id}
+                                      option={option.id}
+                                      text={option.text}
+                                      response={response}
+                                      optionVotes={option.votes.length}
+                                      totalVotes={totalVotes}
+                                  />
+                              ))
+                            : pollOptions.map(option => (
+                                  <VoteOption
+                                      key={option.id}
+                                      text={option.text}
+                                      onClick={() => handleVote(option.id)}
+                                  />
+                              ))}
                     </div>
                 </div>
             </div>

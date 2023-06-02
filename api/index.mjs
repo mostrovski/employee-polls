@@ -4,6 +4,7 @@ import path from "path";
 import { fileURLToPath } from "url";
 import db from "./models/index.js";
 import bcrypt from "bcrypt";
+import cors from "cors";
 
 // Read environment variables.
 dotenv.config();
@@ -13,6 +14,7 @@ const app = express();
 const port = 8080;
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
+app.use(cors());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
@@ -21,7 +23,7 @@ const generateUID = () =>
   Math.random().toString(36).substring(2, 15);
 
 // Define routes.
-app.post("/login", async (req, res) => {
+app.post("/auth", async (req, res) => {
   const { username, password } = req.body;
 
   if (!username || !password) {

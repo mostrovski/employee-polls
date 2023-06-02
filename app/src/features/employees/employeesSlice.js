@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { _getUsers } from '../../api/_data';
+import { _getUsers } from '../../api/client';
 
 const initialState = {
     entities: {},

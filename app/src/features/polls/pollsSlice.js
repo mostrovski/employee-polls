@@ -3,7 +3,7 @@ import {
     _getQuestions,
     _saveQuestion,
     _saveQuestionAnswer,
-} from '../../api/_data';
+} from '../../api/client';
 
 const initialState = {
     ids: [],
@@ -33,9 +33,8 @@ export const addNewPoll = createAsyncThunk(
 
 export const submitVote = createAsyncThunk('polls/submitVote', async vote => {
     await _saveQuestionAnswer({
-        authedUser: vote.userId,
-        qid: vote.pollId,
-        answer: vote.option,
+        user: vote.userId,
+        option: vote.option,
     });
 
     return vote;
@@ -70,7 +69,7 @@ const pollsSlice = createSlice({
 
         builder.addCase(submitVote.fulfilled, (state, action) => {
             const { pollId, option, userId } = action.payload;
-            state.entities[pollId][option].votes.push(userId);
+            state.entities[pollId].options[option].votes.push(userId);
         });
     },
 });

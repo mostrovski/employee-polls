@@ -55,7 +55,7 @@ export default function AddPollForm() {
 
                 const newPoll = await dispatch(
                     addNewPoll({
-                        author: author.id,
+                        username: author.id,
                         optionOneText: firstOption,
                         optionTwoText: secondOption,
                     })
