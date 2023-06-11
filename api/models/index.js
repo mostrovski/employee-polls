@@ -8,6 +8,7 @@ const basename = path.basename(__filename);
 const env = process.env.NODE_ENV || "development";
 const config = require(__dirname + "/../config/config.js")[env];
 const db = {};
+const models = [];
 
 let sequelize;
 if (config.use_env_variable) {
@@ -36,6 +37,7 @@ fs.readdirSync(__dirname)
       Sequelize.DataTypes
     );
     db[model.name] = model;
+    models.push(model.name);
   });
 
 Object.keys(db).forEach((modelName) => {
@@ -47,4 +49,4 @@ Object.keys(db).forEach((modelName) => {
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
-module.exports = db;
+module.exports = { db, models };

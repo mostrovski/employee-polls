@@ -1,4 +1,4 @@
-const host = 'http://localhost:8080';
+const baseUrl = 'http://localhost:8080';
 
 const headers = {
     Accept: 'application/json',
@@ -8,7 +8,7 @@ const reject = reason => Promise.reject(reason);
 const resolve = data => Promise.resolve(data);
 
 export async function _getUsers() {
-    const response = await fetch(`${host}/users`, { headers });
+    const response = await fetch(`${baseUrl}/users`, { headers });
 
     if (response.ok) {
         const resource = await response.json();
@@ -36,7 +36,7 @@ export async function _getUsers() {
 }
 
 export async function _getQuestions() {
-    const response = await fetch(`${host}/polls`, { headers });
+    const response = await fetch(`${baseUrl}/polls`, { headers });
 
     if (response.ok) {
         const resource = await response.json();
@@ -67,7 +67,7 @@ export async function _getQuestions() {
 }
 
 export async function _saveQuestion(question) {
-    const response = await fetch(`${host}/polls`, {
+    const response = await fetch(`${baseUrl}/polls`, {
         method: 'POST',
         headers: {
             ...headers,
@@ -107,7 +107,7 @@ export async function _saveQuestion(question) {
 }
 
 export async function _saveQuestionAnswer({ user, option }) {
-    const response = await fetch(`${host}/options/${option}/vote`, {
+    const response = await fetch(`${baseUrl}/options/${option}/vote`, {
         method: 'POST',
         headers: {
             ...headers,
@@ -132,7 +132,7 @@ export async function _saveQuestionAnswer({ user, option }) {
 }
 
 export async function _authenticate(credentials) {
-    const response = await fetch(`${host}/auth`, {
+    const response = await fetch(`${baseUrl}/auth`, {
         method: 'POST',
         headers: {
             ...headers,

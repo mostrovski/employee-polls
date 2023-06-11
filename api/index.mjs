@@ -2,7 +2,7 @@ import dotenv from "dotenv";
 import express from "express";
 import path from "path";
 import { fileURLToPath } from "url";
-import db from "./models/index.js";
+import { db } from "./models/index.js";
 import bcrypt from "bcrypt";
 import cors from "cors";
 
@@ -51,7 +51,7 @@ app.post("/auth", async (req, res) => {
 app.get("/users", async (req, res) => {
   try {
     const users = await db.user.findAll({
-      attributes: { exclude: ["password"] },
+      attributes: { exclude: ["password", "createdAt", "updatedAt"] },
       include: [
         {
           model: db.poll,
@@ -85,6 +85,7 @@ app.get("/users", async (req, res) => {
 app.get("/polls", async (req, res) => {
   try {
     const polls = await db.poll.findAll({
+      attributes: { exclude: ["updatedAt"] },
       include: [
         {
           model: db.user,
