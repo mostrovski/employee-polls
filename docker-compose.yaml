@@ -12,7 +12,7 @@ services:
     volumes:
       - ./data:/var/lib/mysql
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p$$MYSQL_ROOT_PASSWORD"]
+      test: "mariadb $$MYSQL_DATABASE -h localhost -u $$MYSQL_USER -p$$MYSQL_PASSWORD -e 'SELECT 1;'"
       interval: 10s
       timeout: 10s
       retries: 5
