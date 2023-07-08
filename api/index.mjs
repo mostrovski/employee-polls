@@ -124,6 +124,10 @@ app.post("/polls", async (req, res) => {
     return res.status(400).json({ error: "Bad Request" });
   }
 
+  if (optionOneText === optionTwoText) {
+    return res.status(422).json({ error: "Options cannot be identical" });
+  }
+
   try {
     const author = await db.user.findOne({ where: { username } });
 

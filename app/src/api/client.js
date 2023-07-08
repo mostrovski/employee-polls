@@ -101,6 +101,8 @@ export async function _saveQuestion(question) {
         case 400:
         case 404:
             return reject('Submitted data is not valid');
+        case 422:
+            return reject('Options should be distinct');
         default:
             return reject('Something went wrong');
     }

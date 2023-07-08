@@ -199,6 +199,25 @@ describe("Polls", () => {
     expect(db.option.count()).resolves.toBe(optionsCount);
   });
 
+  it("handles cases with identical options", async () => {
+    const pollsCount = await db.poll.count();
+    const optionsCount = await db.option.count();
+
+    let response = await createPoll({
+      username: "sarahedo",
+      optionOneText: "take a walk",
+      optionTwoText: "take a walk",
+    });
+
+    expect(response.ok).toBe(false);
+    expect(response.status).toBe(422);
+    expect(response.json()).resolves.toStrictEqual({
+      error: "Options cannot be identical",
+    });
+    expect(db.poll.count()).resolves.toBe(pollsCount);
+    expect(db.option.count()).resolves.toBe(optionsCount);
+  });
+
   it("handles bad requests", async () => {
     const pollsCount = await db.poll.count();
     const optionsCount = await db.option.count();

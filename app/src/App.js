@@ -20,10 +20,7 @@ export default function App() {
                     <Navbar />
                     <Routes>
                         <Route path="/" element={<PollsList />} />
-                        <Route
-                            path="questions/:question_id"
-                            element={<SinglePoll />}
-                        />
+                        <Route path="polls/:poll_id" element={<SinglePoll />} />
                         <Route path="add" element={<AddPollForm />} />
                         <Route path="leaderboard" element={<Leaderboard />} />
                         <Route path="404" element={<NotFound />} />
