@@ -1,5 +1,8 @@
 import { fireEvent, screen, waitFor } from '@testing-library/react';
 import { renderWithProviders } from '../../../utils/test-utils';
+import { API_HOST } from '../../../mocks/handlers';
+import { server } from '../../../mocks/server';
+import { rest } from 'msw';
 import AddPollForm from '../AddPollForm';
 
 const preloadedState = {
@@ -71,6 +74,39 @@ it('renders and behaves correctly', async () => {
     ).toStrictEqual([]);
 
     // Successful submit
+    server.use(
+        rest.post(`${API_HOST}/polls`, (req, res, ctx) => {
+            return res(
+                ctx.status(201),
+                ctx.json({
+                    data: {
+                        id: 7,
+                        key: '32iiirlv6o2hb156dzn3vu',
+                        options: [
+                            {
+                                id: 13,
+                                text: 'work',
+                                pollId: 7,
+                                updatedAt: '2023-07-08T18:50:51.816Z',
+                                createdAt: '2023-07-08T18:50:51.816Z',
+                            },
+                            {
+                                id: 14,
+                                text: 'sleep',
+                                pollId: 7,
+                                updatedAt: '2023-07-08T18:50:51.817Z',
+                                createdAt: '2023-07-08T18:50:51.817Z',
+                            },
+                        ],
+                        authorId: 4,
+                        updatedAt: '2023-07-08T18:50:51.794Z',
+                        createdAt: '2023-07-08T18:50:51.794Z',
+                    },
+                })
+            );
+        })
+    );
+
     fireEvent.change(firstOption, { target: { value: 'work' } });
     fireEvent.change(secondOption, { target: { value: 'sleep' } });
     fireEvent.click(submitButton);
@@ -93,8 +129,12 @@ it('renders and behaves correctly', async () => {
 
     expect(poll.id).toBe(pollId);
     expect(poll.author).toBe('zoshikanlu');
-    expect(poll.optionOne).toStrictEqual({ votes: [], text: 'work' });
-    expect(poll.optionTwo).toStrictEqual({ votes: [], text: 'sleep' });
+    expect(poll.options[13]).toStrictEqual({ id: 13, text: 'work', votes: [] });
+    expect(poll.options[14]).toStrictEqual({
+        id: 14,
+        text: 'sleep',
+        votes: [],
+    });
 });
 
 it('stores multiple polls correctly', async () => {
@@ -103,6 +143,39 @@ it('stores multiple polls correctly', async () => {
     const firstOption = screen.getByLabelText('First option');
     const secondOption = screen.getByLabelText('Second option');
     const submitButton = screen.getByRole('button', { type: 'submit' });
+
+    server.use(
+        rest.post(`${API_HOST}/polls`, (req, res, ctx) => {
+            return res(
+                ctx.status(201),
+                ctx.json({
+                    data: {
+                        id: 7,
+                        key: '32iiirlv6o2hb156dzn3vu',
+                        options: [
+                            {
+                                id: 13,
+                                text: 'work',
+                                pollId: 7,
+                                updatedAt: '2023-07-08T18:50:51.816Z',
+                                createdAt: '2023-07-08T18:50:51.816Z',
+                            },
+                            {
+                                id: 14,
+                                text: 'sleep',
+                                pollId: 7,
+                                updatedAt: '2023-07-08T18:50:51.817Z',
+                                createdAt: '2023-07-08T18:50:51.817Z',
+                            },
+                        ],
+                        authorId: 4,
+                        updatedAt: '2023-07-08T18:50:51.794Z',
+                        createdAt: '2023-07-08T18:50:51.794Z',
+                    },
+                })
+            );
+        })
+    );
 
     fireEvent.change(firstOption, { target: { value: 'work' } });
     fireEvent.change(secondOption, { target: { value: 'sleep' } });
@@ -116,6 +189,39 @@ it('stores multiple polls correctly', async () => {
     );
 
     const [firstPollId] = store.getState().polls.ids;
+
+    server.use(
+        rest.post(`${API_HOST}/polls`, (req, res, ctx) => {
+            return res(
+                ctx.status(201),
+                ctx.json({
+                    data: {
+                        id: 8,
+                        key: '33iiirlv6o2hb156dzn3vu',
+                        options: [
+                            {
+                                id: 15,
+                                text: 'play chess',
+                                pollId: 8,
+                                updatedAt: '2023-07-08T18:51:51.816Z',
+                                createdAt: '2023-07-08T18:51:51.816Z',
+                            },
+                            {
+                                id: 16,
+                                text: 'play checkers',
+                                pollId: 8,
+                                updatedAt: '2023-07-08T18:51:51.817Z',
+                                createdAt: '2023-07-08T18:51:51.817Z',
+                            },
+                        ],
+                        authorId: 4,
+                        updatedAt: '2023-07-08T18:51:51.794Z',
+                        createdAt: '2023-07-08T18:51:51.794Z',
+                    },
+                })
+            );
+        })
+    );
 
     fireEvent.change(firstOption, { target: { value: 'play chess' } });
     fireEvent.change(secondOption, { target: { value: 'play checkers' } });
@@ -142,18 +248,28 @@ it('stores multiple polls correctly', async () => {
     const firstPoll = store.getState().polls.entities[firstPollId];
     expect(firstPoll.id).toBe(firstPollId);
     expect(firstPoll.author).toBe('zoshikanlu');
-    expect(firstPoll.optionOne).toStrictEqual({ votes: [], text: 'work' });
-    expect(firstPoll.optionTwo).toStrictEqual({ votes: [], text: 'sleep' });
+    expect(firstPoll.options[13]).toStrictEqual({
+        id: 13,
+        text: 'work',
+        votes: [],
+    });
+    expect(firstPoll.options[14]).toStrictEqual({
+        id: 14,
+        text: 'sleep',
+        votes: [],
+    });
 
     const secondPoll = store.getState().polls.entities[secondPollId];
     expect(secondPoll.id).toBe(secondPollId);
     expect(secondPoll.author).toBe('zoshikanlu');
-    expect(secondPoll.optionOne).toStrictEqual({
-        votes: [],
+    expect(secondPoll.options[15]).toStrictEqual({
+        id: 15,
         text: 'play chess',
-    });
-    expect(secondPoll.optionTwo).toStrictEqual({
         votes: [],
+    });
+    expect(secondPoll.options[16]).toStrictEqual({
+        id: 16,
         text: 'play checkers',
+        votes: [],
     });
 });

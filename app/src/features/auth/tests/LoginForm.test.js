@@ -1,5 +1,8 @@
 import { fireEvent, screen, waitFor } from '@testing-library/react';
 import { renderWithProviders } from '../../../utils/test-utils';
+import { API_HOST } from '../../../mocks/handlers';
+import { server } from '../../../mocks/server';
+import { rest } from 'msw';
 import LoginForm from '../LoginForm';
 
 it('renders and behaves correctly', async () => {
@@ -18,6 +21,17 @@ it('renders and behaves correctly', async () => {
     expect(store.getState().auth.user).toBe(null);
 
     // First attempt:
+    server.use(
+        rest.post(`${API_HOST}/auth`, (req, res, ctx) => {
+            return res(
+                ctx.status(404),
+                ctx.json({
+                    error: 'Not found',
+                })
+            );
+        })
+    );
+
     fireEvent.change(username, { target: { value: 'tylermcginnis' } });
     fireEvent.change(password, { target: { value: 'abc123' } });
     fireEvent.click(submitButton);
@@ -32,6 +46,17 @@ it('renders and behaves correctly', async () => {
     expect(store.getState().auth.user).toBe(null);
 
     // Second attempt:
+    server.use(
+        rest.post(`${API_HOST}/auth`, (req, res, ctx) => {
+            return res(
+                ctx.status(200),
+                ctx.json({
+                    user: 'tylermcginnis',
+                })
+            );
+        })
+    );
+
     fireEvent.change(username, { target: { value: 'tylermcginnis' } });
     fireEvent.change(password, { target: { value: 'abc321' } });
     fireEvent.click(submitButton);

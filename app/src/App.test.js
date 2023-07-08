@@ -1,6 +1,9 @@
 import { fireEvent, screen, waitFor, within } from '@testing-library/react';
 import App from './App';
 import { renderWithProviders } from './utils/test-utils';
+import { API_HOST } from './mocks/handlers';
+import { server } from './mocks/server';
+import { rest } from 'msw';
 
 it('renders login form at root if there is no authenticated user', () => {
     renderWithProviders(<App />);
@@ -37,6 +40,17 @@ it('renders login form if user is not authenticated and route is unknown', () =>
 });
 
 it('redirects to 404 after login if route is unknown', async () => {
+    server.use(
+        rest.post(`${API_HOST}/auth`, (req, res, ctx) => {
+            return res(
+                ctx.status(200),
+                ctx.json({
+                    user: 'tylermcginnis',
+                })
+            );
+        })
+    );
+
     renderWithProviders(<App />, {
         route: { currentPath: '/some/random/stuff' },
     });
@@ -71,6 +85,17 @@ it('renders login form if user is not authenticated and route is meant for authe
 });
 
 it('renders intended component after login if route is known', async () => {
+    server.use(
+        rest.post(`${API_HOST}/auth`, (req, res, ctx) => {
+            return res(
+                ctx.status(200),
+                ctx.json({
+                    user: 'tylermcginnis',
+                })
+            );
+        })
+    );
+
     renderWithProviders(<App />, {
         route: { currentPath: '/add' },
     });
@@ -97,6 +122,17 @@ it('integrates', async () => {
     renderWithProviders(<App />);
 
     // Login
+    server.use(
+        rest.post(`${API_HOST}/auth`, (req, res, ctx) => {
+            return res(
+                ctx.status(200),
+                ctx.json({
+                    user: 'tylermcginnis',
+                })
+            );
+        })
+    );
+
     fireEvent.change(screen.getByPlaceholderText('Username'), {
         target: { value: 'tylermcginnis' },
     });
@@ -147,6 +183,12 @@ it('integrates', async () => {
     expect(screen.getAllByTestId('poll-card').length).toBe(4);
 
     // Respond to first poll
+    server.use(
+        rest.post(`${API_HOST}/options/5/vote`, (req, res, ctx) => {
+            return res(ctx.status(204), ctx.json());
+        })
+    );
+
     fireEvent.click(
         within(screen.getAllByTestId('poll-card')[0]).getByRole('link')
     );
@@ -167,6 +209,12 @@ it('integrates', async () => {
     expect(screen.getAllByTestId('poll-card').length).toBe(3);
 
     // Respond to second poll
+    server.use(
+        rest.post(`${API_HOST}/options/7/vote`, (req, res, ctx) => {
+            return res(ctx.status(204), ctx.json());
+        })
+    );
+
     fireEvent.click(
         within(screen.getAllByTestId('poll-card')[0]).getByRole('link')
     );
@@ -187,6 +235,39 @@ it('integrates', async () => {
     expect(screen.getAllByTestId('poll-card').length).toBe(2);
 
     // Add new poll
+    server.use(
+        rest.post(`${API_HOST}/polls`, (req, res, ctx) => {
+            return res(
+                ctx.status(201),
+                ctx.json({
+                    data: {
+                        id: 7,
+                        key: '32iiirlv6o2hb156dzn3vu',
+                        options: [
+                            {
+                                id: 13,
+                                text: 'work',
+                                pollId: 7,
+                                updatedAt: '2023-07-08T18:50:51.816Z',
+                                createdAt: '2023-07-08T18:50:51.816Z',
+                            },
+                            {
+                                id: 14,
+                                text: 'sleep',
+                                pollId: 7,
+                                updatedAt: '2023-07-08T18:50:51.817Z',
+                                createdAt: '2023-07-08T18:50:51.817Z',
+                            },
+                        ],
+                        authorId: 4,
+                        updatedAt: '2023-07-08T18:50:51.794Z',
+                        createdAt: '2023-07-08T18:50:51.794Z',
+                    },
+                })
+            );
+        })
+    );
+
     fireEvent.click(addPollLink);
 
     fireEvent.change(screen.getByLabelText('First option'), {
@@ -209,6 +290,12 @@ it('integrates', async () => {
     );
 
     // Respond to own poll
+    server.use(
+        rest.post(`${API_HOST}/options/13/vote`, (req, res, ctx) => {
+            return res(ctx.status(204), ctx.json());
+        })
+    );
+
     fireEvent.click(
         within(screen.getAllByTestId('poll-card')[0]).getByRole('link')
     );

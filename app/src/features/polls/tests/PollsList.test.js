@@ -1,4 +1,10 @@
-import { fireEvent, screen, waitFor, within } from '@testing-library/react';
+import {
+    fireEvent,
+    screen,
+    waitFor,
+    within,
+    act,
+} from '@testing-library/react';
 import format from 'date-fns/format';
 import { renderWithProviders } from '../../../utils/test-utils';
 import PollsList from '../PollsList';
@@ -23,9 +29,9 @@ const preloadedState = {
                 id: 'mtsamis',
                 name: 'Mike Tsamis',
                 answers: {
-                    xj352vofupe1dqz9emx13r: 'optionOne',
-                    vthrdm985a262al8qx3do: 'optionTwo',
-                    '6ni6ok3ym7mf1p33lnez': 'optionOne',
+                    xj352vofupe1dqz9emx13r: 11,
+                    vthrdm985a262al8qx3do: 10,
+                    '6ni6ok3ym7mf1p33lnez': 4,
                 },
             },
             zoshikanlu: {
@@ -41,7 +47,7 @@ it('renders and behaves correctly', async () => {
 
     expect(screen.getByText('Employee Polls')).toBeInTheDocument();
 
-    store.dispatch(fetchPolls());
+    await act(async () => store.dispatch(fetchPolls()));
 
     await waitFor(() => expect(store.getState().polls.ids.length).toBe(6), {
         timeout: 2000,
