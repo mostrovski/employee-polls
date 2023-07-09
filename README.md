@@ -59,6 +59,8 @@
 
 ### Approach
 
+#### Implementation
+
 I decided to experiment with [Tailwind UI](https://tailwindui.com/)
 to quickly compose decently looking visual blocks representing two major states of the application:
 
@@ -73,6 +75,18 @@ As for the state management, I opted for [Redux Toolkit](https://redux-toolkit.j
 
 I came up with three *features*: auth, employees, and polls.
 Each feature got its slice of the store, and associated components.
+
+The [original version](https://github.com/mostrovski/employee-polls/tree/fakeAPI) of this project was built around the fake API. To make this demo a bit more realistic, I implemented a simple [Express](https://expressjs.com/)-[MySQL](https://www.mysql.com/)-[Sequelize](https://sequelize.org/) backend.
+
+#### Structure
+
+To simplify the local installation, I decided to containerize the application with [Docker](https://www.docker.com/).
+The original React code moved under the `app`, and two more directories appeared in the root of the project:
+
+- `api` contains the backend logic;
+- `data` persists the MySQL data locally, making the database state transferable between the container starts.
+
+The `mysql`, `api`, and `app` containers configured in the [docker-compose](./docker-compose.yaml) use mentioned directories as volumes.
 
 ### How to run it
 
@@ -97,15 +111,51 @@ Each feature got its slice of the store, and associated components.
    webpack compiled successfully
    ```
 7. If it didn't happen automatically during the build, open provided link in your browser.
+8. Use credentials from [here](./api/seeders/20230527122735-users.js) to sign in.
+
+### Usage
+
+```bash
+# Start (will also migrate and seed the database if it is empty)
+docker compose up app
+
+# Stop
+docker compose down
+
+# Migrate the database
+docker exec -it ep-api-1 npm run migrate
+
+# Seed the database
+docker exec -it ep-api-1 npm run seed
+
+# Rollback migrations
+docker exec -it ep-api-1 npm run migrate:rollback
+
+# Rollback, migrate, seed
+docker exec -it ep-api-1 npm run migrate:refresh
+```
+
 
 ### Tests
 
 The application is tested with [Jest](https://jestjs.io/) and [React Testing Library](https://testing-library.com/docs/react-testing-library/intro).
 
-Execute `docker exec -it ep-app-1 npm test` to run all the test suites in the running container with the name *ep-app-1*.
+To run API tests, execute:
 
-Instead of the name, one can also use the container id. List active containers with `docker ps` to check these values.
+```bash
+docker exec -it ep-api-1 npm test
+```
+
+To run app tests, execute:
+
+```bash
+docker exec -it ep-app-1 npm test
+```
+
+### Container IDs
+
+While executing docker commands, instead of the container names (*ep-mysql-1*, *ep-api-1* or *ep-app-1*), one can also reference the container IDs. List active containers with `docker ps` to check these values.
 
 ### Kudos
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app), using the [Redux](https://redux.js.org/) and [Redux Toolkit](https://redux-toolkit.js.org/) template. The starter fake API and project requirements were provided as a part of the [React Nanodegree](https://www.udacity.com/course/react-nanodegree--nd019) at Udacity.
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app), using the [Redux](https://redux.js.org/) and [Redux Toolkit](https://redux-toolkit.js.org/) template. The project requirements were provided as a part of the [React Nanodegree](https://www.udacity.com/course/react-nanodegree--nd019) at Udacity.
