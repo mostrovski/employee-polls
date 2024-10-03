@@ -32,9 +32,9 @@ export default function AddPollForm() {
     }
 
     const handleFirstOptionChange = event =>
-        setFirstOption(event.target.value.trim());
+        setFirstOption(event.target.value);
     const handleSecondOptionChange = event =>
-        setSecondOption(event.target.value.trim());
+        setSecondOption(event.target.value);
 
     const canSubmit =
         [firstOption, secondOption].every(Boolean) &&
@@ -45,7 +45,7 @@ export default function AddPollForm() {
         setError(null);
 
         if (canSubmit) {
-            if (firstOption === secondOption) {
+            if (firstOption.trim() === secondOption.trim()) {
                 setError('Options should be distinct');
                 return;
             }
@@ -56,8 +56,8 @@ export default function AddPollForm() {
                 const newPoll = await dispatch(
                     addNewPoll({
                         username: author.id,
-                        optionOneText: firstOption,
-                        optionTwoText: secondOption,
+                        optionOneText: firstOption.trim(),
+                        optionTwoText: secondOption.trim(),
                     })
                 ).unwrap();
 
